@@ -1,0 +1,732 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>搞清楚夏普指数计算 &#8212; 关于投资</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sharpe_test';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="豆瓣图书排名分析" href="douban.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="douban.html">豆瓣图书排名分析</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">搞清楚夏普指数计算</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsharpe_test.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/sharpe_test.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>搞清楚夏普指数计算</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">上面计算年化的公式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">总结</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>搞清楚夏普指数计算<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p>参考了：<a class="reference external" href="https://www.learnpythonwithrune.org/how-to-calculate-sharpe-ratio-with-pandas-and-numpy/">https://www.learnpythonwithrune.org/how-to-calculate-sharpe-ratio-with-pandas-and-numpy/</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">altair</span> <span class="k">as</span> <span class="nn">alt</span>
+<span class="kn">import</span> <span class="nn">akshare</span> <span class="k">as</span> <span class="nn">ak</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">ak</span><span class="o">.</span><span class="n">stock_zh_a_hist</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="s2">&quot;603777&quot;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s2">&quot;daily&quot;</span><span class="p">,</span> <span class="n">adjust</span><span class="o">=</span><span class="s2">&quot;hfq&quot;</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+<span class="n">test</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 查看原始数据大约情况</span>
+<span class="c1"># altair中，需要指定x轴为时间类型，才能缩放x轴。</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;td:T&#39;</span><span class="p">,</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;close:Q&#39;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="mi">600</span><span class="p">)</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div id="altair-viz-2b1eb51b11374ccd8799f83de5af5b85"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-2b1eb51b11374ccd8799f83de5af5b85") {
+      outputDiv = document.getElementById("altair-viz-2b1eb51b11374ccd8799f83de5af5b85");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.17.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "4.17.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"name": "data-dcb11d28e4b6dc953af8281170fd5097"}, "mark": "line", "encoding": {"x": {"field": "td", "type": "temporal"}, "y": {"field": "close", "type": "quantitative"}}, "selection": {"selector001": {"type": "interval", "bind": "scales", "encodings": ["x", "y"]}}, "width": 600, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-dcb11d28e4b6dc953af8281170fd5097": [{"td": "2016-10-12", "close": 16.8}, {"td": "2016-10-13", "close": 18.48}, {"td": "2016-10-14", "close": 20.33}, {"td": "2016-10-17", "close": 22.36}, {"td": "2016-10-18", "close": 24.6}, {"td": "2016-10-19", "close": 27.06}, {"td": "2016-10-20", "close": 29.77}, {"td": "2016-10-21", "close": 32.75}, {"td": "2016-10-24", "close": 36.03}, {"td": "2016-10-25", "close": 39.63}, {"td": "2016-10-26", "close": 43.59}, {"td": "2016-10-27", "close": 47.95}, {"td": "2016-10-28", "close": 52.75}, {"td": "2016-10-31", "close": 58.03}, {"td": "2016-11-01", "close": 60.84}, {"td": "2016-11-02", "close": 66.92}, {"td": "2016-11-03", "close": 65.63}, {"td": "2016-11-04", "close": 63.87}, {"td": "2016-11-07", "close": 64.84}, {"td": "2016-11-08", "close": 64.13}, {"td": "2016-11-09", "close": 68.83}, {"td": "2016-11-10", "close": 75.71}, {"td": "2016-11-11", "close": 71.56}, {"td": "2016-11-14", "close": 66.16}, {"td": "2016-11-15", "close": 65.48}, {"td": "2016-11-16", "close": 63.19}, {"td": "2016-11-17", "close": 63.4}, {"td": "2016-11-18", "close": 62.26}, {"td": "2016-11-21", "close": 64.44}, {"td": "2016-11-22", "close": 63.81}, {"td": "2016-11-23", "close": 65.42}, {"td": "2016-11-24", "close": 61.39}, {"td": "2016-11-25", "close": 59.59}, {"td": "2016-11-28", "close": 58.69}, {"td": "2016-11-29", "close": 57.15}, {"td": "2016-11-30", "close": 56.23}, {"td": "2016-12-01", "close": 61.85}, {"td": "2016-12-02", "close": 61.94}, {"td": "2016-12-05", "close": 57.93}, {"td": "2016-12-06", "close": 58.76}, {"td": "2016-12-07", "close": 60.8}, {"td": "2016-12-08", "close": 58.66}, {"td": "2016-12-09", "close": 57.65}, {"td": "2016-12-12", "close": 53.81}, {"td": "2016-12-13", "close": 53.88}, {"td": "2016-12-14", "close": 52.22}, {"td": "2016-12-15", "close": 53.12}, {"td": "2016-12-16", "close": 58.43}, {"td": "2016-12-19", "close": 55.07}, {"td": "2016-12-20", "close": 55.63}, {"td": "2016-12-21", "close": 56.57}, {"td": "2016-12-22", "close": 56.28}, {"td": "2016-12-23", "close": 56.52}, {"td": "2016-12-26", "close": 58.31}, {"td": "2016-12-27", "close": 57.29}, {"td": "2016-12-28", "close": 55.43}, {"td": "2016-12-29", "close": 53.65}, {"td": "2016-12-30", "close": 53.09}, {"td": "2017-01-03", "close": 53.73}, {"td": "2017-01-04", "close": 53.62}, {"td": "2017-01-05", "close": 53.59}, {"td": "2017-01-06", "close": 49.29}, {"td": "2017-01-09", "close": 46.89}, {"td": "2017-01-10", "close": 46.89}, {"td": "2017-01-11", "close": 45.0}, {"td": "2017-01-12", "close": 43.66}, {"td": "2017-01-13", "close": 43.2}, {"td": "2017-01-16", "close": 39.32}, {"td": "2017-01-17", "close": 42.06}, {"td": "2017-01-18", "close": 40.28}, {"td": "2017-01-19", "close": 40.79}, {"td": "2017-01-20", "close": 41.1}, {"td": "2017-01-23", "close": 41.36}, {"td": "2017-01-24", "close": 39.62}, {"td": "2017-01-25", "close": 39.99}, {"td": "2017-01-26", "close": 40.01}, {"td": "2017-02-03", "close": 40.12}, {"td": "2017-02-06", "close": 41.97}, {"td": "2017-02-07", "close": 41.88}, {"td": "2017-02-08", "close": 42.91}, {"td": "2017-02-09", "close": 43.02}, {"td": "2017-02-10", "close": 41.77}, {"td": "2017-02-13", "close": 42.25}, {"td": "2017-02-14", "close": 42.09}, {"td": "2017-02-15", "close": 43.14}, {"td": "2017-02-16", "close": 42.3}, {"td": "2017-02-17", "close": 40.78}, {"td": "2017-02-20", "close": 39.91}, {"td": "2017-02-21", "close": 40.92}, {"td": "2017-02-22", "close": 41.29}, {"td": "2017-02-23", "close": 41.74}, {"td": "2017-02-24", "close": 42.13}, {"td": "2017-02-27", "close": 42.78}, {"td": "2017-02-28", "close": 43.09}, {"td": "2017-03-01", "close": 44.31}, {"td": "2017-03-02", "close": 43.41}, {"td": "2017-03-03", "close": 42.72}, {"td": "2017-03-06", "close": 43.64}, {"td": "2017-03-07", "close": 44.99}, {"td": "2017-03-08", "close": 44.34}, {"td": "2017-03-09", "close": 45.01}, {"td": "2017-03-10", "close": 44.67}, {"td": "2017-03-13", "close": 45.61}, {"td": "2017-03-14", "close": 45.0}, {"td": "2017-03-15", "close": 44.08}, {"td": "2017-03-16", "close": 45.03}, {"td": "2017-03-17", "close": 44.16}, {"td": "2017-03-20", "close": 46.23}, {"td": "2017-03-21", "close": 46.36}, {"td": "2017-03-22", "close": 47.72}, {"td": "2017-03-23", "close": 49.63}, {"td": "2017-03-24", "close": 48.69}, {"td": "2017-03-27", "close": 47.19}, {"td": "2017-03-28", "close": 46.75}, {"td": "2017-03-29", "close": 43.2}, {"td": "2017-03-30", "close": 40.5}, {"td": "2017-03-31", "close": 40.74}, {"td": "2017-04-05", "close": 41.26}, {"td": "2017-04-06", "close": 41.02}, {"td": "2017-04-07", "close": 40.37}, {"td": "2017-04-10", "close": 37.67}, {"td": "2017-04-11", "close": 38.28}, {"td": "2017-04-12", "close": 37.6}, {"td": "2017-04-13", "close": 37.66}, {"td": "2017-04-14", "close": 35.88}, {"td": "2017-04-17", "close": 33.57}, {"td": "2017-04-18", "close": 32.18}, {"td": "2017-04-19", "close": 32.99}, {"td": "2017-04-20", "close": 33.0}, {"td": "2017-04-21", "close": 32.63}, {"td": "2017-04-24", "close": 31.08}, {"td": "2017-04-25", "close": 31.28}, {"td": "2017-04-26", "close": 34.41}, {"td": "2017-04-27", "close": 36.68}, {"td": "2017-04-28", "close": 35.8}, {"td": "2017-05-02", "close": 35.53}, {"td": "2017-05-03", "close": 36.4}, {"td": "2017-05-04", "close": 35.51}, {"td": "2017-05-05", "close": 35.07}, {"td": "2017-05-08", "close": 34.48}, {"td": "2017-05-09", "close": 34.12}, {"td": "2017-05-10", "close": 34.14}, {"td": "2017-05-11", "close": 35.44}, {"td": "2017-05-12", "close": 35.34}, {"td": "2017-05-15", "close": 36.39}, {"td": "2017-05-16", "close": 37.28}, {"td": "2017-05-17", "close": 37.0}, {"td": "2017-05-18", "close": 35.75}, {"td": "2017-05-19", "close": 35.81}, {"td": "2017-05-22", "close": 33.09}, {"td": "2017-05-23", "close": 31.2}, {"td": "2017-05-24", "close": 31.8}, {"td": "2017-05-25", "close": 31.83}, {"td": "2017-05-26", "close": 32.77}, {"td": "2017-05-31", "close": 33.26}, {"td": "2017-06-01", "close": 31.43}, {"td": "2017-06-02", "close": 33.39}, {"td": "2017-06-05", "close": 33.7}, {"td": "2017-06-06", "close": 34.54}, {"td": "2017-06-07", "close": 34.93}, {"td": "2017-06-08", "close": 33.93}, {"td": "2017-06-09", "close": 35.23}, {"td": "2017-06-12", "close": 33.93}, {"td": "2017-06-13", "close": 36.08}, {"td": "2017-06-14", "close": 37.86}, {"td": "2017-06-15", "close": 38.44}, {"td": "2017-06-16", "close": 37.26}, {"td": "2017-06-19", "close": 37.03}, {"td": "2017-06-20", "close": 36.89}, {"td": "2017-06-21", "close": 36.03}, {"td": "2017-06-22", "close": 35.81}, {"td": "2017-06-23", "close": 37.19}, {"td": "2017-06-26", "close": 37.44}, {"td": "2017-06-27", "close": 36.79}, {"td": "2017-06-28", "close": 36.94}, {"td": "2017-06-29", "close": 36.87}, {"td": "2017-06-30", "close": 37.48}, {"td": "2017-07-03", "close": 37.29}, {"td": "2017-07-04", "close": 36.7}, {"td": "2017-07-05", "close": 36.63}, {"td": "2017-07-06", "close": 36.01}, {"td": "2017-07-07", "close": 37.6}, {"td": "2017-07-10", "close": 36.22}, {"td": "2017-07-11", "close": 34.41}, {"td": "2017-07-12", "close": 34.27}, {"td": "2017-07-13", "close": 34.13}, {"td": "2017-07-14", "close": 33.72}, {"td": "2017-07-17", "close": 30.69}, {"td": "2017-07-18", "close": 31.72}, {"td": "2017-07-19", "close": 31.79}, {"td": "2017-07-20", "close": 31.67}, {"td": "2017-07-21", "close": 31.66}, {"td": "2017-07-24", "close": 32.18}, {"td": "2017-07-25", "close": 32.35}, {"td": "2017-07-26", "close": 31.87}, {"td": "2017-07-27", "close": 32.98}, {"td": "2017-07-28", "close": 32.6}, {"td": "2017-07-31", "close": 32.59}, {"td": "2017-08-01", "close": 32.39}, {"td": "2017-08-02", "close": 31.6}, {"td": "2017-08-03", "close": 31.75}, {"td": "2017-08-04", "close": 31.39}, {"td": "2017-08-07", "close": 31.6}, {"td": "2017-08-08", "close": 31.65}, {"td": "2017-08-09", "close": 31.95}, {"td": "2017-08-10", "close": 31.41}, {"td": "2017-08-11", "close": 30.91}, {"td": "2017-08-14", "close": 31.36}, {"td": "2017-08-15", "close": 31.53}, {"td": "2017-08-16", "close": 32.06}, {"td": "2017-08-17", "close": 32.08}, {"td": "2017-08-18", "close": 32.39}, {"td": "2017-08-21", "close": 32.55}, {"td": "2017-08-22", "close": 32.94}, {"td": "2017-08-23", "close": 32.21}, {"td": "2017-08-24", "close": 32.39}, {"td": "2017-08-25", "close": 32.69}, {"td": "2017-08-28", "close": 33.36}, {"td": "2017-08-29", "close": 33.72}, {"td": "2017-08-30", "close": 32.94}, {"td": "2017-08-31", "close": 33.26}, {"td": "2017-09-01", "close": 33.08}, {"td": "2017-09-04", "close": 33.0}, {"td": "2017-09-05", "close": 32.71}, {"td": "2017-09-06", "close": 32.3}, {"td": "2017-09-07", "close": 32.41}, {"td": "2017-09-08", "close": 32.17}, {"td": "2017-09-11", "close": 32.96}, {"td": "2017-09-12", "close": 32.29}, {"td": "2017-09-13", "close": 32.66}, {"td": "2017-09-14", "close": 32.32}, {"td": "2017-09-15", "close": 32.08}, {"td": "2017-09-18", "close": 32.9}, {"td": "2017-09-19", "close": 32.71}, {"td": "2017-09-20", "close": 32.98}, {"td": "2017-09-21", "close": 33.61}, {"td": "2017-09-22", "close": 33.25}, {"td": "2017-09-25", "close": 31.59}, {"td": "2017-09-26", "close": 31.65}, {"td": "2017-09-27", "close": 31.68}, {"td": "2017-09-28", "close": 31.26}, {"td": "2017-09-29", "close": 31.52}, {"td": "2017-10-09", "close": 31.71}, {"td": "2017-10-10", "close": 32.12}, {"td": "2017-10-11", "close": 32.17}, {"td": "2017-10-12", "close": 33.01}, {"td": "2017-10-13", "close": 33.67}, {"td": "2017-10-16", "close": 32.51}, {"td": "2017-10-17", "close": 35.73}, {"td": "2017-10-18", "close": 35.22}, {"td": "2017-10-19", "close": 34.62}, {"td": "2017-10-20", "close": 33.46}, {"td": "2017-10-23", "close": 34.28}, {"td": "2017-10-24", "close": 34.88}, {"td": "2017-10-25", "close": 34.74}, {"td": "2017-10-26", "close": 34.08}, {"td": "2017-10-27", "close": 34.25}, {"td": "2017-10-30", "close": 32.32}, {"td": "2017-10-31", "close": 32.39}, {"td": "2017-11-01", "close": 32.08}, {"td": "2017-11-02", "close": 31.98}, {"td": "2017-11-03", "close": 32.03}, {"td": "2017-11-06", "close": 33.53}, {"td": "2017-11-07", "close": 33.82}, {"td": "2017-11-08", "close": 33.82}, {"td": "2017-11-09", "close": 33.66}, {"td": "2017-11-10", "close": 32.9}, {"td": "2017-11-13", "close": 32.52}, {"td": "2017-11-14", "close": 32.25}, {"td": "2017-11-15", "close": 32.4}, {"td": "2017-11-16", "close": 32.35}, {"td": "2017-11-17", "close": 30.53}, {"td": "2017-11-20", "close": 30.37}, {"td": "2017-11-21", "close": 30.77}, {"td": "2017-11-22", "close": 30.13}, {"td": "2017-11-23", "close": 29.11}, {"td": "2017-11-24", "close": 29.26}, {"td": "2017-11-27", "close": 28.5}, {"td": "2017-11-28", "close": 28.78}, {"td": "2017-11-29", "close": 28.57}, {"td": "2017-11-30", "close": 28.19}, {"td": "2017-12-01", "close": 28.26}, {"td": "2017-12-04", "close": 27.31}, {"td": "2017-12-05", "close": 26.35}, {"td": "2017-12-06", "close": 26.61}, {"td": "2017-12-07", "close": 26.67}, {"td": "2017-12-08", "close": 28.14}, {"td": "2017-12-11", "close": 27.85}, {"td": "2017-12-12", "close": 27.38}, {"td": "2017-12-13", "close": 27.55}, {"td": "2017-12-14", "close": 27.81}, {"td": "2017-12-15", "close": 27.7}, {"td": "2017-12-18", "close": 26.83}, {"td": "2017-12-19", "close": 27.06}, {"td": "2017-12-20", "close": 27.42}, {"td": "2017-12-21", "close": 26.95}, {"td": "2017-12-22", "close": 26.95}, {"td": "2017-12-25", "close": 25.93}, {"td": "2017-12-26", "close": 26.59}, {"td": "2017-12-27", "close": 26.52}, {"td": "2017-12-28", "close": 27.56}, {"td": "2017-12-29", "close": 27.1}, {"td": "2018-01-02", "close": 27.07}, {"td": "2018-01-03", "close": 27.21}, {"td": "2018-01-04", "close": 27.55}, {"td": "2018-01-05", "close": 27.35}, {"td": "2018-01-08", "close": 27.35}, {"td": "2018-01-09", "close": 27.66}, {"td": "2018-01-10", "close": 27.11}, {"td": "2018-01-11", "close": 27.23}, {"td": "2018-01-12", "close": 27.06}, {"td": "2018-01-15", "close": 26.14}, {"td": "2018-01-16", "close": 26.48}, {"td": "2018-01-17", "close": 26.65}, {"td": "2018-01-18", "close": 26.71}, {"td": "2018-01-19", "close": 26.7}, {"td": "2018-01-22", "close": 27.4}, {"td": "2018-01-23", "close": 27.23}, {"td": "2018-01-24", "close": 27.3}, {"td": "2018-01-25", "close": 27.08}, {"td": "2018-01-26", "close": 27.26}, {"td": "2018-01-29", "close": 27.09}, {"td": "2018-01-30", "close": 27.36}, {"td": "2018-01-31", "close": 27.55}, {"td": "2018-02-01", "close": 24.83}, {"td": "2018-02-02", "close": 23.39}, {"td": "2018-02-05", "close": 23.16}, {"td": "2018-02-06", "close": 20.88}, {"td": "2018-02-07", "close": 21.26}, {"td": "2018-02-08", "close": 21.54}, {"td": "2018-02-09", "close": 20.98}, {"td": "2018-02-12", "close": 21.43}, {"td": "2018-02-13", "close": 21.42}, {"td": "2018-02-14", "close": 21.46}, {"td": "2018-02-22", "close": 21.86}, {"td": "2018-02-23", "close": 21.99}, {"td": "2018-02-26", "close": 22.67}, {"td": "2018-02-27", "close": 22.68}, {"td": "2018-02-28", "close": 22.5}, {"td": "2018-03-01", "close": 22.68}, {"td": "2018-03-02", "close": 22.62}, {"td": "2018-03-05", "close": 22.46}, {"td": "2018-03-06", "close": 22.88}, {"td": "2018-03-07", "close": 22.52}, {"td": "2018-03-08", "close": 22.7}, {"td": "2018-03-09", "close": 23.29}, {"td": "2018-03-12", "close": 23.64}, {"td": "2018-03-13", "close": 23.34}, {"td": "2018-03-14", "close": 23.14}, {"td": "2018-03-15", "close": 22.54}, {"td": "2018-03-16", "close": 23.14}, {"td": "2018-03-19", "close": 23.0}, {"td": "2018-03-20", "close": 22.97}, {"td": "2018-03-21", "close": 23.37}, {"td": "2018-03-22", "close": 24.21}, {"td": "2018-03-23", "close": 22.11}, {"td": "2018-03-26", "close": 21.95}, {"td": "2018-03-27", "close": 22.3}, {"td": "2018-03-28", "close": 22.27}, {"td": "2018-03-29", "close": 22.83}, {"td": "2018-03-30", "close": 23.18}, {"td": "2018-04-02", "close": 22.97}, {"td": "2018-04-03", "close": 22.68}, {"td": "2018-04-04", "close": 23.0}, {"td": "2018-04-09", "close": 22.77}, {"td": "2018-04-10", "close": 23.31}, {"td": "2018-04-11", "close": 23.6}, {"td": "2018-04-12", "close": 23.85}, {"td": "2018-04-13", "close": 24.46}, {"td": "2018-04-16", "close": 23.62}, {"td": "2018-04-17", "close": 22.91}, {"td": "2018-04-18", "close": 22.94}, {"td": "2018-04-19", "close": 22.81}, {"td": "2018-04-20", "close": 22.08}, {"td": "2018-04-23", "close": 21.99}, {"td": "2018-04-24", "close": 22.42}, {"td": "2018-04-25", "close": 22.5}, {"td": "2018-04-26", "close": 21.82}, {"td": "2018-04-27", "close": 21.57}, {"td": "2018-05-02", "close": 21.22}, {"td": "2018-05-03", "close": 21.64}, {"td": "2018-05-04", "close": 21.75}, {"td": "2018-05-07", "close": 22.13}, {"td": "2018-05-08", "close": 22.82}, {"td": "2018-05-09", "close": 22.77}, {"td": "2018-05-10", "close": 23.47}, {"td": "2018-05-11", "close": 22.64}, {"td": "2018-05-14", "close": 22.51}, {"td": "2018-05-15", "close": 23.68}, {"td": "2018-05-16", "close": 25.35}, {"td": "2018-05-17", "close": 24.27}, {"td": "2018-05-18", "close": 26.66}, {"td": "2018-05-21", "close": 27.19}, {"td": "2018-05-22", "close": 26.91}, {"td": "2018-05-23", "close": 26.14}, {"td": "2018-05-24", "close": 25.99}, {"td": "2018-05-25", "close": 26.37}, {"td": "2018-05-28", "close": 26.26}, {"td": "2018-05-29", "close": 25.32}, {"td": "2018-05-30", "close": 24.99}, {"td": "2018-05-31", "close": 27.45}, {"td": "2018-06-01", "close": 27.31}, {"td": "2018-06-04", "close": 26.93}, {"td": "2018-06-05", "close": 27.34}, {"td": "2018-06-06", "close": 27.67}, {"td": "2018-06-07", "close": 26.22}, {"td": "2018-06-08", "close": 25.49}, {"td": "2018-06-11", "close": 25.05}, {"td": "2018-06-12", "close": 27.49}, {"td": "2018-06-13", "close": 30.16}, {"td": "2018-06-14", "close": 28.26}, {"td": "2018-06-15", "close": 27.38}, {"td": "2018-06-19", "close": 24.72}, {"td": "2018-06-20", "close": 26.12}, {"td": "2018-06-21", "close": 27.01}, {"td": "2018-06-22", "close": 27.18}, {"td": "2018-06-25", "close": 28.41}, {"td": "2018-06-26", "close": 28.33}, {"td": "2018-06-27", "close": 27.29}, {"td": "2018-06-28", "close": 25.68}, {"td": "2018-06-29", "close": 26.55}, {"td": "2018-07-02", "close": 27.35}, {"td": "2018-07-03", "close": 27.15}, {"td": "2018-07-04", "close": 26.9}, {"td": "2018-07-05", "close": 24.86}, {"td": "2018-07-06", "close": 24.45}, {"td": "2018-07-09", "close": 24.72}, {"td": "2018-07-10", "close": 24.59}, {"td": "2018-07-11", "close": 23.02}, {"td": "2018-07-12", "close": 23.56}, {"td": "2018-07-13", "close": 23.89}, {"td": "2018-07-16", "close": 23.53}, {"td": "2018-07-17", "close": 23.63}, {"td": "2018-07-18", "close": 24.17}, {"td": "2018-07-19", "close": 23.47}, {"td": "2018-07-20", "close": 23.49}, {"td": "2018-07-23", "close": 23.42}, {"td": "2018-07-24", "close": 23.95}, {"td": "2018-07-25", "close": 24.02}, {"td": "2018-07-26", "close": 24.06}, {"td": "2018-07-27", "close": 23.85}, {"td": "2018-07-30", "close": 22.9}, {"td": "2018-07-31", "close": 22.76}, {"td": "2018-08-01", "close": 23.16}, {"td": "2018-08-02", "close": 21.83}, {"td": "2018-08-03", "close": 22.0}, {"td": "2018-08-06", "close": 20.38}, {"td": "2018-08-07", "close": 20.21}, {"td": "2018-08-08", "close": 18.75}, {"td": "2018-08-09", "close": 18.8}, {"td": "2018-08-10", "close": 19.17}, {"td": "2018-08-13", "close": 19.51}, {"td": "2018-08-14", "close": 19.4}, {"td": "2018-08-15", "close": 19.06}, {"td": "2018-08-16", "close": 18.66}, {"td": "2018-08-17", "close": 17.94}, {"td": "2018-08-20", "close": 18.0}, {"td": "2018-08-21", "close": 18.33}, {"td": "2018-08-22", "close": 17.76}, {"td": "2018-08-23", "close": 18.17}, {"td": "2018-08-24", "close": 17.94}, {"td": "2018-08-27", "close": 18.18}, {"td": "2018-08-28", "close": 17.89}, {"td": "2018-08-29", "close": 17.86}, {"td": "2018-08-30", "close": 17.54}, {"td": "2018-08-31", "close": 16.68}, {"td": "2018-09-03", "close": 16.96}, {"td": "2018-09-04", "close": 17.48}, {"td": "2018-09-05", "close": 16.95}, {"td": "2018-09-06", "close": 16.95}, {"td": "2018-09-07", "close": 17.13}, {"td": "2018-09-10", "close": 16.33}, {"td": "2018-09-11", "close": 16.63}, {"td": "2018-09-12", "close": 16.92}, {"td": "2018-09-13", "close": 16.86}, {"td": "2018-09-14", "close": 16.46}, {"td": "2018-09-17", "close": 16.32}, {"td": "2018-09-18", "close": 16.56}, {"td": "2018-09-19", "close": 16.68}, {"td": "2018-09-20", "close": 16.61}, {"td": "2018-09-21", "close": 17.45}, {"td": "2018-09-25", "close": 16.96}, {"td": "2018-09-26", "close": 16.99}, {"td": "2018-09-27", "close": 16.44}, {"td": "2018-09-28", "close": 16.58}, {"td": "2018-10-08", "close": 15.94}, {"td": "2018-10-09", "close": 16.02}, {"td": "2018-10-10", "close": 16.18}, {"td": "2018-10-11", "close": 14.65}, {"td": "2018-10-12", "close": 14.05}, {"td": "2018-10-15", "close": 13.67}, {"td": "2018-10-16", "close": 13.63}, {"td": "2018-10-17", "close": 13.78}, {"td": "2018-10-18", "close": 13.7}, {"td": "2018-10-19", "close": 14.09}, {"td": "2018-10-22", "close": 14.69}, {"td": "2018-10-23", "close": 14.41}, {"td": "2018-10-24", "close": 14.64}, {"td": "2018-10-25", "close": 14.41}, {"td": "2018-10-26", "close": 14.43}, {"td": "2018-10-29", "close": 14.19}, {"td": "2018-10-30", "close": 14.33}, {"td": "2018-10-31", "close": 14.6}, {"td": "2018-11-01", "close": 14.65}, {"td": "2018-11-02", "close": 15.07}, {"td": "2018-11-05", "close": 15.65}, {"td": "2018-11-06", "close": 15.45}, {"td": "2018-11-07", "close": 15.38}, {"td": "2018-11-08", "close": 15.3}, {"td": "2018-11-09", "close": 15.17}, {"td": "2018-11-12", "close": 15.48}, {"td": "2018-11-13", "close": 15.67}, {"td": "2018-11-14", "close": 15.63}, {"td": "2018-11-15", "close": 15.94}, {"td": "2018-11-16", "close": 16.4}, {"td": "2018-11-19", "close": 16.51}, {"td": "2018-11-20", "close": 15.76}, {"td": "2018-11-21", "close": 15.84}, {"td": "2018-11-22", "close": 15.87}, {"td": "2018-11-23", "close": 15.06}, {"td": "2018-11-26", "close": 15.77}, {"td": "2018-11-27", "close": 15.58}, {"td": "2018-11-28", "close": 15.59}, {"td": "2018-11-29", "close": 15.04}, {"td": "2018-11-30", "close": 15.17}, {"td": "2018-12-03", "close": 15.74}, {"td": "2018-12-04", "close": 16.3}, {"td": "2018-12-05", "close": 16.07}, {"td": "2018-12-06", "close": 15.72}, {"td": "2018-12-07", "close": 15.83}, {"td": "2018-12-10", "close": 16.18}, {"td": "2018-12-11", "close": 16.0}, {"td": "2018-12-12", "close": 15.93}, {"td": "2018-12-13", "close": 15.94}, {"td": "2018-12-14", "close": 15.79}, {"td": "2018-12-17", "close": 15.16}, {"td": "2018-12-18", "close": 15.09}, {"td": "2018-12-19", "close": 14.81}, {"td": "2018-12-20", "close": 14.85}, {"td": "2018-12-21", "close": 14.89}, {"td": "2018-12-24", "close": 14.89}, {"td": "2018-12-25", "close": 14.51}, {"td": "2018-12-26", "close": 14.47}, {"td": "2018-12-27", "close": 14.12}, {"td": "2018-12-28", "close": 14.23}, {"td": "2019-01-02", "close": 14.48}, {"td": "2019-01-03", "close": 14.44}, {"td": "2019-01-04", "close": 14.74}, {"td": "2019-01-07", "close": 14.95}, {"td": "2019-01-08", "close": 15.17}, {"td": "2019-01-09", "close": 14.99}, {"td": "2019-01-10", "close": 14.99}, {"td": "2019-01-11", "close": 15.21}, {"td": "2019-01-14", "close": 15.1}, {"td": "2019-01-15", "close": 15.3}, {"td": "2019-01-16", "close": 16.75}, {"td": "2019-01-17", "close": 16.49}, {"td": "2019-01-18", "close": 16.18}, {"td": "2019-01-21", "close": 16.15}, {"td": "2019-01-22", "close": 15.84}, {"td": "2019-01-23", "close": 15.88}, {"td": "2019-01-24", "close": 16.35}, {"td": "2019-01-25", "close": 16.16}, {"td": "2019-01-28", "close": 16.43}, {"td": "2019-01-29", "close": 16.49}, {"td": "2019-01-30", "close": 15.13}, {"td": "2019-01-31", "close": 14.29}, {"td": "2019-02-01", "close": 14.67}, {"td": "2019-02-11", "close": 14.96}, {"td": "2019-02-12", "close": 15.1}, {"td": "2019-02-13", "close": 15.23}, {"td": "2019-02-14", "close": 15.2}, {"td": "2019-02-15", "close": 15.42}, {"td": "2019-02-18", "close": 15.84}, {"td": "2019-02-19", "close": 15.76}, {"td": "2019-02-20", "close": 16.0}, {"td": "2019-02-21", "close": 16.01}, {"td": "2019-02-22", "close": 16.11}, {"td": "2019-02-25", "close": 16.67}, {"td": "2019-02-26", "close": 16.57}, {"td": "2019-02-27", "close": 16.51}, {"td": "2019-02-28", "close": 16.57}, {"td": "2019-03-01", "close": 16.47}, {"td": "2019-03-04", "close": 16.57}, {"td": "2019-03-05", "close": 16.85}, {"td": "2019-03-06", "close": 17.27}, {"td": "2019-03-07", "close": 17.61}, {"td": "2019-03-08", "close": 16.43}, {"td": "2019-03-11", "close": 16.93}, {"td": "2019-03-12", "close": 17.19}, {"td": "2019-03-13", "close": 17.31}, {"td": "2019-03-14", "close": 16.85}, {"td": "2019-03-15", "close": 17.41}, {"td": "2019-03-18", "close": 18.03}, {"td": "2019-03-19", "close": 17.65}, {"td": "2019-03-20", "close": 17.51}, {"td": "2019-03-21", "close": 17.42}, {"td": "2019-03-22", "close": 17.83}, {"td": "2019-03-25", "close": 17.35}, {"td": "2019-03-26", "close": 16.64}, {"td": "2019-03-27", "close": 16.98}, {"td": "2019-03-28", "close": 16.63}, {"td": "2019-03-29", "close": 17.09}, {"td": "2019-04-01", "close": 17.56}, {"td": "2019-04-02", "close": 18.24}, {"td": "2019-04-03", "close": 18.8}, {"td": "2019-04-04", "close": 18.39}, {"td": "2019-04-08", "close": 18.17}, {"td": "2019-04-09", "close": 18.12}, {"td": "2019-04-10", "close": 17.97}, {"td": "2019-04-11", "close": 18.31}, {"td": "2019-04-12", "close": 18.07}, {"td": "2019-04-15", "close": 17.54}, {"td": "2019-04-16", "close": 17.47}, {"td": "2019-04-17", "close": 17.73}, {"td": "2019-04-18", "close": 17.51}, {"td": "2019-04-19", "close": 17.73}, {"td": "2019-04-22", "close": 17.83}, {"td": "2019-04-23", "close": 18.17}, {"td": "2019-04-24", "close": 18.74}, {"td": "2019-04-25", "close": 17.52}, {"td": "2019-04-26", "close": 19.2}, {"td": "2019-04-29", "close": 18.81}, {"td": "2019-04-30", "close": 19.64}, {"td": "2019-05-06", "close": 21.53}, {"td": "2019-05-07", "close": 23.6}, {"td": "2019-05-08", "close": 25.88}, {"td": "2019-05-09", "close": 23.37}, {"td": "2019-05-10", "close": 22.37}, {"td": "2019-05-13", "close": 22.74}, {"td": "2019-05-14", "close": 21.05}, {"td": "2019-05-15", "close": 22.34}, {"td": "2019-05-16", "close": 21.88}, {"td": "2019-05-17", "close": 22.59}, {"td": "2019-05-20", "close": 20.41}, {"td": "2019-05-21", "close": 19.59}, {"td": "2019-05-22", "close": 19.05}, {"td": "2019-05-23", "close": 18.05}, {"td": "2019-05-24", "close": 18.07}, {"td": "2019-05-27", "close": 18.63}, {"td": "2019-05-28", "close": 18.49}, {"td": "2019-05-29", "close": 19.08}, {"td": "2019-05-30", "close": 19.33}, {"td": "2019-05-31", "close": 18.6}, {"td": "2019-06-03", "close": 17.98}, {"td": "2019-06-04", "close": 17.9}, {"td": "2019-06-05", "close": 18.49}, {"td": "2019-06-06", "close": 18.74}, {"td": "2019-06-10", "close": 19.22}, {"td": "2019-06-11", "close": 20.73}, {"td": "2019-06-12", "close": 19.93}, {"td": "2019-06-13", "close": 20.15}, {"td": "2019-06-14", "close": 19.06}, {"td": "2019-06-17", "close": 19.3}, {"td": "2019-06-18", "close": 18.78}, {"td": "2019-06-19", "close": 19.05}, {"td": "2019-06-20", "close": 19.29}, {"td": "2019-06-21", "close": 20.13}, {"td": "2019-06-24", "close": 19.89}, {"td": "2019-06-25", "close": 19.61}, {"td": "2019-06-26", "close": 20.36}, {"td": "2019-06-27", "close": 20.8}, {"td": "2019-06-28", "close": 20.71}, {"td": "2019-07-01", "close": 21.74}, {"td": "2019-07-02", "close": 22.27}, {"td": "2019-07-03", "close": 22.32}, {"td": "2019-07-04", "close": 21.05}, {"td": "2019-07-05", "close": 21.29}, {"td": "2019-07-08", "close": 22.07}, {"td": "2019-07-09", "close": 21.04}, {"td": "2019-07-10", "close": 20.29}, {"td": "2019-07-11", "close": 20.55}, {"td": "2019-07-12", "close": 20.67}, {"td": "2019-07-15", "close": 21.15}, {"td": "2019-07-16", "close": 20.84}, {"td": "2019-07-17", "close": 20.24}, {"td": "2019-07-18", "close": 19.44}, {"td": "2019-07-19", "close": 19.36}, {"td": "2019-07-22", "close": 18.47}, {"td": "2019-07-23", "close": 18.88}, {"td": "2019-07-24", "close": 19.06}, {"td": "2019-07-25", "close": 19.55}, {"td": "2019-07-26", "close": 19.19}, {"td": "2019-07-29", "close": 19.1}, {"td": "2019-07-30", "close": 19.22}, {"td": "2019-07-31", "close": 18.91}, {"td": "2019-08-01", "close": 19.16}, {"td": "2019-08-02", "close": 18.38}, {"td": "2019-08-05", "close": 18.22}, {"td": "2019-08-06", "close": 18.32}, {"td": "2019-08-07", "close": 17.87}, {"td": "2019-08-08", "close": 17.86}, {"td": "2019-08-09", "close": 17.76}, {"td": "2019-08-12", "close": 18.32}, {"td": "2019-08-13", "close": 18.21}, {"td": "2019-08-14", "close": 18.12}, {"td": "2019-08-15", "close": 18.12}, {"td": "2019-08-16", "close": 18.14}, {"td": "2019-08-19", "close": 18.5}, {"td": "2019-08-20", "close": 18.39}, {"td": "2019-08-21", "close": 18.47}, {"td": "2019-08-22", "close": 18.26}, {"td": "2019-08-23", "close": 18.08}, {"td": "2019-08-26", "close": 17.84}, {"td": "2019-08-27", "close": 18.46}, {"td": "2019-08-28", "close": 19.83}, {"td": "2019-08-29", "close": 18.87}, {"td": "2019-08-30", "close": 18.32}, {"td": "2019-09-02", "close": 18.66}, {"td": "2019-09-03", "close": 18.64}, {"td": "2019-09-04", "close": 18.67}, {"td": "2019-09-05", "close": 18.8}, {"td": "2019-09-06", "close": 19.05}, {"td": "2019-09-09", "close": 19.29}, {"td": "2019-09-10", "close": 19.57}, {"td": "2019-09-11", "close": 19.02}, {"td": "2019-09-12", "close": 19.09}, {"td": "2019-09-16", "close": 18.95}, {"td": "2019-09-17", "close": 18.54}, {"td": "2019-09-18", "close": 19.15}, {"td": "2019-09-19", "close": 19.44}, {"td": "2019-09-20", "close": 19.79}, {"td": "2019-09-23", "close": 19.72}, {"td": "2019-09-24", "close": 19.3}, {"td": "2019-09-25", "close": 21.13}, {"td": "2019-09-26", "close": 20.56}, {"td": "2019-09-27", "close": 20.1}, {"td": "2019-09-30", "close": 19.82}, {"td": "2019-10-08", "close": 18.25}, {"td": "2019-10-09", "close": 17.84}, {"td": "2019-10-10", "close": 17.91}, {"td": "2019-10-11", "close": 17.84}, {"td": "2019-10-14", "close": 18.17}, {"td": "2019-10-15", "close": 17.79}, {"td": "2019-10-16", "close": 17.49}, {"td": "2019-10-17", "close": 17.93}, {"td": "2019-10-18", "close": 18.5}, {"td": "2019-10-21", "close": 18.42}, {"td": "2019-10-22", "close": 18.46}, {"td": "2019-10-23", "close": 18.12}, {"td": "2019-10-24", "close": 17.87}, {"td": "2019-10-25", "close": 18.07}, {"td": "2019-10-28", "close": 17.3}, {"td": "2019-10-29", "close": 17.07}, {"td": "2019-10-30", "close": 16.6}, {"td": "2019-10-31", "close": 16.64}, {"td": "2019-11-01", "close": 16.85}, {"td": "2019-11-04", "close": 16.64}, {"td": "2019-11-05", "close": 16.65}, {"td": "2019-11-06", "close": 16.36}, {"td": "2019-11-07", "close": 16.39}, {"td": "2019-11-08", "close": 16.26}, {"td": "2019-11-11", "close": 15.81}, {"td": "2019-11-12", "close": 15.91}, {"td": "2019-11-13", "close": 15.83}, {"td": "2019-11-14", "close": 15.94}, {"td": "2019-11-15", "close": 15.63}, {"td": "2019-11-18", "close": 15.39}, {"td": "2019-11-19", "close": 15.81}, {"td": "2019-11-20", "close": 16.01}, {"td": "2019-11-21", "close": 15.91}, {"td": "2019-11-22", "close": 15.67}, {"td": "2019-11-25", "close": 15.52}, {"td": "2019-11-26", "close": 15.39}, {"td": "2019-11-27", "close": 15.3}, {"td": "2019-11-28", "close": 15.23}, {"td": "2019-11-29", "close": 15.23}, {"td": "2019-12-02", "close": 15.45}, {"td": "2019-12-03", "close": 15.53}, {"td": "2019-12-04", "close": 15.56}, {"td": "2019-12-05", "close": 15.59}, {"td": "2019-12-06", "close": 15.86}, {"td": "2019-12-09", "close": 15.87}, {"td": "2019-12-10", "close": 16.01}, {"td": "2019-12-11", "close": 15.9}, {"td": "2019-12-12", "close": 16.49}, {"td": "2019-12-13", "close": 16.4}, {"td": "2019-12-16", "close": 16.46}, {"td": "2019-12-17", "close": 16.54}, {"td": "2019-12-18", "close": 16.78}, {"td": "2019-12-19", "close": 17.41}, {"td": "2019-12-20", "close": 17.23}, {"td": "2019-12-23", "close": 16.78}, {"td": "2019-12-24", "close": 17.33}, {"td": "2019-12-25", "close": 17.17}, {"td": "2019-12-26", "close": 17.16}, {"td": "2019-12-27", "close": 17.48}, {"td": "2019-12-30", "close": 17.34}, {"td": "2019-12-31", "close": 17.44}, {"td": "2020-01-02", "close": 18.64}, {"td": "2020-01-03", "close": 18.47}, {"td": "2020-01-06", "close": 19.12}, {"td": "2020-01-07", "close": 18.63}, {"td": "2020-01-08", "close": 18.03}, {"td": "2020-01-09", "close": 18.17}, {"td": "2020-01-10", "close": 18.63}, {"td": "2020-01-13", "close": 18.63}, {"td": "2020-01-14", "close": 18.39}, {"td": "2020-01-15", "close": 18.07}, {"td": "2020-01-16", "close": 18.05}, {"td": "2020-01-17", "close": 17.87}, {"td": "2020-01-20", "close": 17.96}, {"td": "2020-01-21", "close": 17.49}, {"td": "2020-01-22", "close": 17.12}, {"td": "2020-01-23", "close": 16.37}, {"td": "2020-02-03", "close": 14.83}, {"td": "2020-02-04", "close": 14.09}, {"td": "2020-02-05", "close": 14.9}, {"td": "2020-02-06", "close": 15.07}, {"td": "2020-02-07", "close": 14.99}, {"td": "2020-02-10", "close": 15.27}, {"td": "2020-02-11", "close": 15.06}, {"td": "2020-02-12", "close": 15.37}, {"td": "2020-02-13", "close": 15.04}, {"td": "2020-02-14", "close": 15.02}, {"td": "2020-02-17", "close": 15.42}, {"td": "2020-02-18", "close": 16.16}, {"td": "2020-02-19", "close": 16.21}, {"td": "2020-02-20", "close": 17.0}, {"td": "2020-02-21", "close": 16.86}, {"td": "2020-02-24", "close": 16.93}, {"td": "2020-02-25", "close": 16.64}, {"td": "2020-02-26", "close": 16.42}, {"td": "2020-02-27", "close": 16.79}, {"td": "2020-02-28", "close": 15.67}, {"td": "2020-03-02", "close": 16.16}, {"td": "2020-03-03", "close": 16.23}, {"td": "2020-03-04", "close": 17.17}, {"td": "2020-03-05", "close": 17.76}, {"td": "2020-03-06", "close": 17.21}, {"td": "2020-03-09", "close": 16.67}, {"td": "2020-03-10", "close": 16.96}, {"td": "2020-03-11", "close": 17.21}, {"td": "2020-03-12", "close": 18.05}, {"td": "2020-03-13", "close": 17.77}, {"td": "2020-03-16", "close": 18.04}, {"td": "2020-03-17", "close": 19.09}, {"td": "2020-03-18", "close": 18.52}, {"td": "2020-03-19", "close": 18.74}, {"td": "2020-03-20", "close": 19.09}, {"td": "2020-03-23", "close": 17.7}, {"td": "2020-03-24", "close": 18.24}, {"td": "2020-03-25", "close": 19.29}, {"td": "2020-03-26", "close": 19.01}, {"td": "2020-03-27", "close": 18.31}, {"td": "2020-03-30", "close": 17.76}, {"td": "2020-03-31", "close": 18.61}, {"td": "2020-04-01", "close": 17.76}, {"td": "2020-04-02", "close": 17.47}, {"td": "2020-04-03", "close": 17.28}, {"td": "2020-04-07", "close": 17.9}, {"td": "2020-04-08", "close": 18.11}, {"td": "2020-04-09", "close": 18.68}, {"td": "2020-04-10", "close": 18.6}, {"td": "2020-04-13", "close": 18.84}, {"td": "2020-04-14", "close": 19.48}, {"td": "2020-04-15", "close": 19.05}, {"td": "2020-04-16", "close": 19.08}, {"td": "2020-04-17", "close": 18.49}, {"td": "2020-04-20", "close": 18.68}, {"td": "2020-04-21", "close": 20.46}, {"td": "2020-04-22", "close": 22.41}, {"td": "2020-04-23", "close": 22.21}, {"td": "2020-04-24", "close": 20.88}, {"td": "2020-04-27", "close": 20.34}, {"td": "2020-04-28", "close": 20.48}, {"td": "2020-04-29", "close": 19.72}, {"td": "2020-04-30", "close": 19.97}, {"td": "2020-05-06", "close": 21.88}, {"td": "2020-05-07", "close": 23.96}, {"td": "2020-05-08", "close": 24.35}, {"td": "2020-05-11", "close": 24.28}, {"td": "2020-05-12", "close": 24.66}, {"td": "2020-05-13", "close": 24.96}, {"td": "2020-05-14", "close": 27.35}, {"td": "2020-05-15", "close": 26.36}, {"td": "2020-05-18", "close": 26.52}, {"td": "2020-05-19", "close": 27.73}, {"td": "2020-05-20", "close": 25.57}, {"td": "2020-05-21", "close": 24.89}, {"td": "2020-05-22", "close": 24.47}, {"td": "2020-05-25", "close": 25.88}, {"td": "2020-05-26", "close": 27.39}, {"td": "2020-05-27", "close": 27.07}, {"td": "2020-05-28", "close": 26.5}, {"td": "2020-05-29", "close": 26.97}, {"td": "2020-06-01", "close": 27.67}, {"td": "2020-06-02", "close": 26.23}, {"td": "2020-06-03", "close": 26.15}, {"td": "2020-06-04", "close": 26.17}, {"td": "2020-06-05", "close": 24.76}, {"td": "2020-06-08", "close": 24.62}, {"td": "2020-06-09", "close": 24.69}, {"td": "2020-06-10", "close": 24.58}, {"td": "2020-06-11", "close": 23.81}, {"td": "2020-06-12", "close": 24.47}, {"td": "2020-06-15", "close": 24.12}, {"td": "2020-06-16", "close": 24.41}, {"td": "2020-06-17", "close": 24.82}, {"td": "2020-06-18", "close": 24.26}, {"td": "2020-06-19", "close": 24.24}, {"td": "2020-06-22", "close": 24.54}, {"td": "2020-06-23", "close": 24.9}, {"td": "2020-06-24", "close": 24.3}, {"td": "2020-06-29", "close": 23.92}, {"td": "2020-06-30", "close": 24.51}, {"td": "2020-07-01", "close": 26.02}, {"td": "2020-07-02", "close": 25.94}, {"td": "2020-07-03", "close": 25.67}, {"td": "2020-07-06", "close": 25.88}, {"td": "2020-07-07", "close": 26.34}, {"td": "2020-07-08", "close": 26.44}, {"td": "2020-07-09", "close": 27.83}, {"td": "2020-07-10", "close": 27.32}, {"td": "2020-07-13", "close": 29.95}, {"td": "2020-07-14", "close": 30.36}, {"td": "2020-07-15", "close": 29.94}, {"td": "2020-07-16", "close": 27.07}, {"td": "2020-07-17", "close": 26.48}, {"td": "2020-07-20", "close": 27.14}, {"td": "2020-07-21", "close": 27.13}, {"td": "2020-07-22", "close": 28.36}, {"td": "2020-07-23", "close": 28.2}, {"td": "2020-07-24", "close": 26.19}, {"td": "2020-07-27", "close": 25.26}, {"td": "2020-07-28", "close": 25.94}, {"td": "2020-07-29", "close": 27.01}, {"td": "2020-07-30", "close": 26.94}, {"td": "2020-07-31", "close": 27.84}, {"td": "2020-08-03", "close": 30.51}, {"td": "2020-08-04", "close": 29.1}, {"td": "2020-08-05", "close": 30.79}, {"td": "2020-08-06", "close": 30.28}, {"td": "2020-08-07", "close": 29.11}, {"td": "2020-08-10", "close": 29.09}, {"td": "2020-08-11", "close": 29.24}, {"td": "2020-08-12", "close": 27.85}, {"td": "2020-08-13", "close": 27.36}, {"td": "2020-08-14", "close": 27.85}, {"td": "2020-08-17", "close": 28.25}, {"td": "2020-08-18", "close": 28.71}, {"td": "2020-08-19", "close": 29.32}, {"td": "2020-08-20", "close": 29.45}, {"td": "2020-08-21", "close": 31.47}, {"td": "2020-08-24", "close": 31.48}, {"td": "2020-08-25", "close": 30.07}, {"td": "2020-08-26", "close": 27.98}, {"td": "2020-08-27", "close": 29.52}, {"td": "2020-08-28", "close": 26.68}, {"td": "2020-08-31", "close": 25.43}, {"td": "2020-09-01", "close": 24.9}, {"td": "2020-09-02", "close": 24.94}, {"td": "2020-09-03", "close": 24.06}, {"td": "2020-09-04", "close": 23.54}, {"td": "2020-09-07", "close": 23.78}, {"td": "2020-09-08", "close": 23.86}, {"td": "2020-09-09", "close": 23.05}, {"td": "2020-09-10", "close": 22.11}, {"td": "2020-09-11", "close": 22.66}, {"td": "2020-09-14", "close": 22.53}, {"td": "2020-09-15", "close": 22.66}, {"td": "2020-09-16", "close": 22.18}, {"td": "2020-09-17", "close": 22.21}, {"td": "2020-09-18", "close": 22.49}, {"td": "2020-09-21", "close": 23.33}, {"td": "2020-09-22", "close": 22.79}, {"td": "2020-09-23", "close": 22.7}, {"td": "2020-09-24", "close": 21.95}, {"td": "2020-09-25", "close": 21.67}, {"td": "2020-09-28", "close": 21.2}, {"td": "2020-09-29", "close": 21.43}, {"td": "2020-09-30", "close": 21.39}, {"td": "2020-10-09", "close": 21.79}, {"td": "2020-10-12", "close": 22.28}, {"td": "2020-10-13", "close": 22.34}, {"td": "2020-10-14", "close": 22.09}, {"td": "2020-10-15", "close": 21.69}, {"td": "2020-10-16", "close": 21.48}, {"td": "2020-10-19", "close": 21.4}, {"td": "2020-10-20", "close": 21.74}, {"td": "2020-10-21", "close": 21.43}, {"td": "2020-10-22", "close": 20.98}, {"td": "2020-10-23", "close": 19.79}, {"td": "2020-10-26", "close": 19.48}, {"td": "2020-10-27", "close": 19.71}, {"td": "2020-10-28", "close": 19.44}, {"td": "2020-10-29", "close": 19.61}, {"td": "2020-10-30", "close": 18.56}, {"td": "2020-11-02", "close": 18.12}, {"td": "2020-11-03", "close": 18.96}, {"td": "2020-11-04", "close": 19.36}, {"td": "2020-11-05", "close": 19.4}, {"td": "2020-11-06", "close": 19.19}, {"td": "2020-11-09", "close": 19.65}, {"td": "2020-11-10", "close": 19.54}, {"td": "2020-11-11", "close": 19.29}, {"td": "2020-11-12", "close": 19.43}, {"td": "2020-11-13", "close": 18.91}, {"td": "2020-11-16", "close": 19.54}, {"td": "2020-11-17", "close": 19.22}, {"td": "2020-11-18", "close": 19.2}, {"td": "2020-11-19", "close": 19.36}, {"td": "2020-11-20", "close": 19.23}, {"td": "2020-11-23", "close": 19.33}, {"td": "2020-11-24", "close": 19.36}, {"td": "2020-11-25", "close": 18.85}, {"td": "2020-11-26", "close": 18.56}, {"td": "2020-11-27", "close": 19.09}, {"td": "2020-11-30", "close": 18.91}, {"td": "2020-12-01", "close": 19.82}, {"td": "2020-12-02", "close": 20.45}, {"td": "2020-12-03", "close": 22.07}, {"td": "2020-12-04", "close": 21.89}, {"td": "2020-12-07", "close": 22.41}, {"td": "2020-12-08", "close": 21.46}, {"td": "2020-12-09", "close": 20.76}, {"td": "2020-12-10", "close": 20.55}, {"td": "2020-12-11", "close": 19.86}, {"td": "2020-12-14", "close": 19.99}, {"td": "2020-12-15", "close": 19.51}, {"td": "2020-12-16", "close": 20.28}, {"td": "2020-12-17", "close": 20.0}, {"td": "2020-12-18", "close": 19.5}, {"td": "2020-12-21", "close": 19.34}, {"td": "2020-12-22", "close": 19.22}, {"td": "2020-12-23", "close": 19.65}, {"td": "2020-12-24", "close": 18.94}, {"td": "2020-12-25", "close": 18.98}, {"td": "2020-12-28", "close": 18.63}, {"td": "2020-12-29", "close": 18.19}, {"td": "2020-12-30", "close": 18.22}, {"td": "2020-12-31", "close": 18.43}, {"td": "2021-01-04", "close": 18.74}, {"td": "2021-01-05", "close": 19.41}, {"td": "2021-01-06", "close": 18.92}, {"td": "2021-01-07", "close": 18.29}, {"td": "2021-01-08", "close": 17.82}, {"td": "2021-01-11", "close": 16.79}, {"td": "2021-01-12", "close": 17.4}, {"td": "2021-01-13", "close": 16.98}, {"td": "2021-01-14", "close": 17.09}, {"td": "2021-01-15", "close": 17.13}, {"td": "2021-01-18", "close": 17.38}, {"td": "2021-01-19", "close": 17.35}, {"td": "2021-01-20", "close": 17.45}, {"td": "2021-01-21", "close": 17.7}, {"td": "2021-01-22", "close": 17.65}, {"td": "2021-01-25", "close": 17.16}, {"td": "2021-01-26", "close": 17.0}, {"td": "2021-01-27", "close": 17.03}, {"td": "2021-01-28", "close": 16.86}, {"td": "2021-01-29", "close": 16.18}, {"td": "2021-02-01", "close": 15.86}, {"td": "2021-02-02", "close": 15.65}, {"td": "2021-02-03", "close": 15.1}, {"td": "2021-02-04", "close": 14.71}, {"td": "2021-02-05", "close": 15.25}, {"td": "2021-02-08", "close": 15.44}, {"td": "2021-02-09", "close": 15.49}, {"td": "2021-02-10", "close": 15.49}, {"td": "2021-02-18", "close": 16.08}, {"td": "2021-02-19", "close": 16.39}, {"td": "2021-02-22", "close": 16.46}, {"td": "2021-02-23", "close": 16.26}, {"td": "2021-02-24", "close": 16.12}, {"td": "2021-02-25", "close": 15.66}, {"td": "2021-02-26", "close": 15.69}, {"td": "2021-03-01", "close": 16.0}, {"td": "2021-03-02", "close": 15.93}, {"td": "2021-03-03", "close": 16.07}, {"td": "2021-03-04", "close": 15.98}, {"td": "2021-03-05", "close": 16.85}, {"td": "2021-03-08", "close": 17.55}, {"td": "2021-03-09", "close": 17.23}, {"td": "2021-03-10", "close": 17.31}, {"td": "2021-03-11", "close": 17.63}, {"td": "2021-03-12", "close": 17.34}, {"td": "2021-03-15", "close": 17.07}, {"td": "2021-03-16", "close": 17.05}, {"td": "2021-03-17", "close": 17.48}, {"td": "2021-03-18", "close": 17.72}, {"td": "2021-03-19", "close": 17.61}, {"td": "2021-03-22", "close": 17.68}, {"td": "2021-03-23", "close": 17.63}, {"td": "2021-03-24", "close": 17.56}, {"td": "2021-03-25", "close": 17.23}, {"td": "2021-03-26", "close": 17.69}, {"td": "2021-03-29", "close": 17.55}, {"td": "2021-03-30", "close": 17.54}, {"td": "2021-03-31", "close": 19.17}, {"td": "2021-04-01", "close": 18.81}, {"td": "2021-04-02", "close": 19.06}, {"td": "2021-04-06", "close": 19.09}, {"td": "2021-04-07", "close": 19.2}, {"td": "2021-04-08", "close": 19.24}, {"td": "2021-04-09", "close": 19.65}, {"td": "2021-04-12", "close": 19.78}, {"td": "2021-04-13", "close": 19.58}, {"td": "2021-04-14", "close": 19.71}, {"td": "2021-04-15", "close": 19.65}, {"td": "2021-04-16", "close": 19.66}, {"td": "2021-04-19", "close": 19.02}, {"td": "2021-04-20", "close": 18.82}, {"td": "2021-04-21", "close": 18.71}, {"td": "2021-04-22", "close": 19.27}, {"td": "2021-04-23", "close": 19.19}, {"td": "2021-04-26", "close": 18.39}, {"td": "2021-04-27", "close": 18.45}, {"td": "2021-04-28", "close": 18.33}, {"td": "2021-04-29", "close": 18.47}, {"td": "2021-04-30", "close": 18.39}, {"td": "2021-05-06", "close": 18.12}, {"td": "2021-05-07", "close": 18.11}, {"td": "2021-05-10", "close": 17.61}, {"td": "2021-05-11", "close": 18.1}, {"td": "2021-05-12", "close": 18.19}, {"td": "2021-05-13", "close": 18.21}, {"td": "2021-05-14", "close": 18.6}, {"td": "2021-05-17", "close": 18.63}, {"td": "2021-05-18", "close": 18.36}, {"td": "2021-05-19", "close": 18.28}, {"td": "2021-05-20", "close": 18.28}, {"td": "2021-05-21", "close": 18.01}, {"td": "2021-05-24", "close": 17.69}, {"td": "2021-05-25", "close": 18.04}, {"td": "2021-05-26", "close": 18.66}, {"td": "2021-05-27", "close": 19.85}, {"td": "2021-05-28", "close": 19.47}, {"td": "2021-05-31", "close": 19.23}, {"td": "2021-06-01", "close": 19.23}, {"td": "2021-06-02", "close": 19.05}, {"td": "2021-06-03", "close": 18.74}, {"td": "2021-06-04", "close": 18.92}, {"td": "2021-06-07", "close": 20.7}, {"td": "2021-06-08", "close": 20.31}, {"td": "2021-06-09", "close": 22.23}, {"td": "2021-06-10", "close": 24.34}, {"td": "2021-06-11", "close": 24.06}, {"td": "2021-06-15", "close": 23.5}, {"td": "2021-06-16", "close": 25.74}, {"td": "2021-06-17", "close": 28.2}, {"td": "2021-06-18", "close": 29.31}, {"td": "2021-06-21", "close": 28.25}, {"td": "2021-06-22", "close": 27.71}, {"td": "2021-06-23", "close": 27.07}, {"td": "2021-06-24", "close": 24.48}, {"td": "2021-06-25", "close": 24.48}, {"td": "2021-06-28", "close": 24.7}, {"td": "2021-06-29", "close": 25.12}, {"td": "2021-06-30", "close": 24.33}, {"td": "2021-07-01", "close": 23.01}, {"td": "2021-07-02", "close": 23.12}, {"td": "2021-07-05", "close": 23.05}, {"td": "2021-07-06", "close": 22.72}, {"td": "2021-07-07", "close": 22.7}, {"td": "2021-07-08", "close": 22.31}, {"td": "2021-07-09", "close": 22.66}, {"td": "2021-07-12", "close": 22.8}, {"td": "2021-07-13", "close": 23.4}, {"td": "2021-07-14", "close": 23.78}, {"td": "2021-07-15", "close": 22.65}, {"td": "2021-07-16", "close": 23.28}, {"td": "2021-07-19", "close": 22.35}, {"td": "2021-07-20", "close": 23.54}, {"td": "2021-07-21", "close": 22.84}, {"td": "2021-07-22", "close": 22.32}, {"td": "2021-07-23", "close": 21.15}, {"td": "2021-07-26", "close": 21.36}, {"td": "2021-07-27", "close": 19.89}, {"td": "2021-07-28", "close": 19.26}, {"td": "2021-07-29", "close": 19.65}, {"td": "2021-07-30", "close": 19.45}, {"td": "2021-08-02", "close": 20.01}, {"td": "2021-08-03", "close": 19.89}, {"td": "2021-08-04", "close": 19.93}, {"td": "2021-08-05", "close": 19.59}, {"td": "2021-08-06", "close": 19.59}, {"td": "2021-08-09", "close": 20.39}, {"td": "2021-08-10", "close": 20.98}, {"td": "2021-08-11", "close": 21.08}, {"td": "2021-08-12", "close": 20.57}, {"td": "2021-08-13", "close": 20.46}, {"td": "2021-08-16", "close": 20.9}, {"td": "2021-08-17", "close": 22.63}, {"td": "2021-08-18", "close": 21.4}, {"td": "2021-08-19", "close": 21.15}, {"td": "2021-08-20", "close": 19.76}, {"td": "2021-08-23", "close": 19.93}, {"td": "2021-08-24", "close": 20.85}, {"td": "2021-08-25", "close": 21.05}, {"td": "2021-08-26", "close": 20.62}, {"td": "2021-08-27", "close": 20.69}, {"td": "2021-08-30", "close": 21.4}, {"td": "2021-08-31", "close": 20.67}, {"td": "2021-09-01", "close": 21.06}, {"td": "2021-09-02", "close": 20.71}, {"td": "2021-09-03", "close": 21.02}, {"td": "2021-09-06", "close": 21.6}, {"td": "2021-09-07", "close": 22.03}, {"td": "2021-09-08", "close": 21.97}, {"td": "2021-09-09", "close": 21.78}, {"td": "2021-09-10", "close": 21.61}, {"td": "2021-09-13", "close": 21.6}, {"td": "2021-09-14", "close": 21.34}, {"td": "2021-09-15", "close": 21.5}, {"td": "2021-09-16", "close": 22.69}, {"td": "2021-09-17", "close": 21.96}, {"td": "2021-09-22", "close": 20.73}, {"td": "2021-09-23", "close": 20.78}, {"td": "2021-09-24", "close": 21.64}, {"td": "2021-09-27", "close": 22.56}, {"td": "2021-09-28", "close": 22.46}, {"td": "2021-09-29", "close": 22.94}, {"td": "2021-09-30", "close": 22.65}, {"td": "2021-10-08", "close": 23.71}, {"td": "2021-10-11", "close": 23.09}, {"td": "2021-10-12", "close": 24.23}, {"td": "2021-10-13", "close": 25.04}, {"td": "2021-10-14", "close": 24.86}, {"td": "2021-10-15", "close": 22.48}, {"td": "2021-10-18", "close": 21.08}, {"td": "2021-10-19", "close": 20.63}, {"td": "2021-10-20", "close": 20.7}, {"td": "2021-10-21", "close": 20.34}, {"td": "2021-10-22", "close": 20.1}, {"td": "2021-10-25", "close": 20.07}, {"td": "2021-10-26", "close": 20.15}, {"td": "2021-10-27", "close": 18.25}, {"td": "2021-10-28", "close": 18.57}, {"td": "2021-10-29", "close": 18.94}, {"td": "2021-11-01", "close": 18.52}, {"td": "2021-11-02", "close": 18.26}, {"td": "2021-11-03", "close": 18.73}, {"td": "2021-11-04", "close": 19.03}, {"td": "2021-11-05", "close": 19.09}, {"td": "2021-11-08", "close": 18.53}, {"td": "2021-11-09", "close": 18.63}, {"td": "2021-11-10", "close": 18.56}, {"td": "2021-11-11", "close": 18.47}, {"td": "2021-11-12", "close": 18.26}, {"td": "2021-11-15", "close": 18.71}, {"td": "2021-11-16", "close": 18.63}, {"td": "2021-11-17", "close": 18.73}, {"td": "2021-11-18", "close": 18.49}, {"td": "2021-11-19", "close": 18.49}, {"td": "2021-11-22", "close": 18.53}, {"td": "2021-11-23", "close": 18.52}, {"td": "2021-11-24", "close": 18.91}, {"td": "2021-11-25", "close": 18.73}, {"td": "2021-11-26", "close": 18.6}, {"td": "2021-11-29", "close": 18.38}, {"td": "2021-11-30", "close": 18.7}, {"td": "2021-12-01", "close": 18.74}, {"td": "2021-12-02", "close": 18.66}, {"td": "2021-12-03", "close": 18.77}, {"td": "2021-12-06", "close": 18.54}, {"td": "2021-12-07", "close": 18.81}, {"td": "2021-12-08", "close": 19.36}, {"td": "2021-12-09", "close": 20.34}, {"td": "2021-12-10", "close": 20.18}, {"td": "2021-12-13", "close": 19.83}, {"td": "2021-12-14", "close": 21.71}, {"td": "2021-12-15", "close": 22.66}, {"td": "2021-12-16", "close": 24.82}, {"td": "2021-12-17", "close": 22.7}, {"td": "2021-12-20", "close": 21.58}, {"td": "2021-12-21", "close": 21.51}, {"td": "2021-12-22", "close": 20.95}, {"td": "2021-12-23", "close": 21.26}, {"td": "2021-12-24", "close": 22.23}, {"td": "2021-12-27", "close": 21.99}, {"td": "2021-12-28", "close": 22.27}, {"td": "2021-12-29", "close": 21.27}, {"td": "2021-12-30", "close": 21.34}, {"td": "2021-12-31", "close": 22.07}, {"td": "2022-01-04", "close": 24.17}, {"td": "2022-01-05", "close": 24.37}, {"td": "2022-01-06", "close": 24.48}, {"td": "2022-01-07", "close": 23.88}, {"td": "2022-01-10", "close": 24.51}, {"td": "2022-01-11", "close": 24.2}, {"td": "2022-01-12", "close": 22.8}, {"td": "2022-01-13", "close": 22.95}, {"td": "2022-01-14", "close": 22.11}, {"td": "2022-01-17", "close": 22.27}, {"td": "2022-01-18", "close": 23.14}, {"td": "2022-01-19", "close": 22.23}, {"td": "2022-01-20", "close": 24.34}, {"td": "2022-01-21", "close": 24.76}, {"td": "2022-01-24", "close": 22.39}, {"td": "2022-01-25", "close": 21.08}, {"td": "2022-01-26", "close": 21.26}, {"td": "2022-01-27", "close": 21.05}, {"td": "2022-01-28", "close": 21.46}, {"td": "2022-02-07", "close": 21.61}, {"td": "2022-02-08", "close": 21.79}, {"td": "2022-02-09", "close": 21.78}, {"td": "2022-02-10", "close": 21.12}, {"td": "2022-02-11", "close": 19.33}, {"td": "2022-02-14", "close": 19.2}, {"td": "2022-02-15", "close": 18.75}, {"td": "2022-02-16", "close": 18.77}, {"td": "2022-02-17", "close": 18.43}, {"td": "2022-02-18", "close": 18.54}, {"td": "2022-02-21", "close": 18.66}, {"td": "2022-02-22", "close": 18.29}, {"td": "2022-02-23", "close": 18.56}, {"td": "2022-02-24", "close": 18.26}, {"td": "2022-02-25", "close": 18.32}, {"td": "2022-02-28", "close": 18.4}, {"td": "2022-03-01", "close": 18.81}, {"td": "2022-03-02", "close": 18.85}, {"td": "2022-03-03", "close": 18.94}, {"td": "2022-03-04", "close": 18.78}, {"td": "2022-03-07", "close": 18.43}, {"td": "2022-03-08", "close": 17.48}, {"td": "2022-03-09", "close": 17.14}, {"td": "2022-03-10", "close": 17.52}, {"td": "2022-03-11", "close": 18.14}, {"td": "2022-03-14", "close": 17.56}, {"td": "2022-03-15", "close": 16.46}, {"td": "2022-03-16", "close": 17.06}, {"td": "2022-03-17", "close": 17.37}, {"td": "2022-03-18", "close": 17.48}, {"td": "2022-03-21", "close": 17.84}, {"td": "2022-03-22", "close": 17.86}, {"td": "2022-03-23", "close": 17.82}, {"td": "2022-03-24", "close": 17.59}, {"td": "2022-03-25", "close": 17.59}, {"td": "2022-03-28", "close": 17.83}, {"td": "2022-03-29", "close": 18.46}, {"td": "2022-03-30", "close": 18.96}, {"td": "2022-03-31", "close": 18.36}, {"td": "2022-04-01", "close": 18.38}, {"td": "2022-04-06", "close": 19.23}, {"td": "2022-04-07", "close": 18.33}, {"td": "2022-04-08", "close": 18.49}, {"td": "2022-04-11", "close": 18.74}, {"td": "2022-04-12", "close": 19.15}, {"td": "2022-04-13", "close": 20.45}, {"td": "2022-04-14", "close": 20.17}, {"td": "2022-04-15", "close": 19.78}, {"td": "2022-04-18", "close": 20.28}, {"td": "2022-04-19", "close": 19.73}, {"td": "2022-04-20", "close": 20.03}, {"td": "2022-04-21", "close": 19.16}, {"td": "2022-04-22", "close": 18.18}, {"td": "2022-04-25", "close": 16.47}, {"td": "2022-04-26", "close": 15.28}, {"td": "2022-04-27", "close": 15.77}, {"td": "2022-04-28", "close": 16.57}, {"td": "2022-04-29", "close": 16.95}, {"td": "2022-05-05", "close": 17.52}, {"td": "2022-05-06", "close": 17.34}, {"td": "2022-05-09", "close": 17.94}, {"td": "2022-05-10", "close": 18.28}, {"td": "2022-05-11", "close": 19.58}, {"td": "2022-05-12", "close": 19.51}, {"td": "2022-05-13", "close": 20.17}, {"td": "2022-05-16", "close": 20.42}, {"td": "2022-05-17", "close": 19.72}, {"td": "2022-05-18", "close": 20.84}, {"td": "2022-05-19", "close": 20.06}, {"td": "2022-05-20", "close": 21.36}, {"td": "2022-05-23", "close": 21.18}, {"td": "2022-05-24", "close": 20.07}, {"td": "2022-05-25", "close": 20.66}, {"td": "2022-05-26", "close": 20.64}, {"td": "2022-05-27", "close": 20.39}, {"td": "2022-05-30", "close": 20.29}, {"td": "2022-05-31", "close": 20.36}, {"td": "2022-06-01", "close": 20.62}, {"td": "2022-06-02", "close": 20.06}, {"td": "2022-06-06", "close": 20.0}, {"td": "2022-06-07", "close": 19.8}, {"td": "2022-06-08", "close": 19.41}, {"td": "2022-06-09", "close": 19.06}, {"td": "2022-06-10", "close": 19.16}, {"td": "2022-06-13", "close": 19.03}, {"td": "2022-06-14", "close": 19.52}, {"td": "2022-06-15", "close": 19.2}, {"td": "2022-06-16", "close": 19.85}, {"td": "2022-06-17", "close": 19.65}, {"td": "2022-06-20", "close": 19.55}, {"td": "2022-06-21", "close": 19.37}, {"td": "2022-06-22", "close": 18.85}, {"td": "2022-06-23", "close": 18.66}, {"td": "2022-06-24", "close": 18.8}, {"td": "2022-06-27", "close": 19.48}, {"td": "2022-06-28", "close": 19.73}, {"td": "2022-06-29", "close": 20.03}, {"td": "2022-06-30", "close": 20.84}, {"td": "2022-07-01", "close": 20.71}, {"td": "2022-07-04", "close": 20.94}, {"td": "2022-07-05", "close": 20.57}, {"td": "2022-07-06", "close": 20.17}, {"td": "2022-07-07", "close": 19.94}, {"td": "2022-07-08", "close": 20.13}, {"td": "2022-07-11", "close": 19.68}, {"td": "2022-07-12", "close": 18.95}, {"td": "2022-07-13", "close": 19.03}, {"td": "2022-07-14", "close": 18.99}, {"td": "2022-07-15", "close": 18.53}, {"td": "2022-07-18", "close": 18.56}, {"td": "2022-07-19", "close": 18.68}, {"td": "2022-07-20", "close": 19.16}, {"td": "2022-07-21", "close": 18.85}, {"td": "2022-07-22", "close": 19.16}, {"td": "2022-07-25", "close": 19.1}, {"td": "2022-07-26", "close": 19.13}, {"td": "2022-07-27", "close": 19.12}, {"td": "2022-07-28", "close": 19.08}, {"td": "2022-07-29", "close": 19.01}, {"td": "2022-08-01", "close": 19.08}, {"td": "2022-08-02", "close": 18.21}, {"td": "2022-08-03", "close": 18.52}, {"td": "2022-08-04", "close": 19.37}, {"td": "2022-08-05", "close": 19.78}, {"td": "2022-08-08", "close": 19.51}, {"td": "2022-08-09", "close": 19.47}, {"td": "2022-08-10", "close": 19.38}, {"td": "2022-08-11", "close": 19.58}, {"td": "2022-08-12", "close": 19.68}, {"td": "2022-08-15", "close": 19.41}, {"td": "2022-08-16", "close": 19.4}, {"td": "2022-08-17", "close": 19.43}, {"td": "2022-08-18", "close": 19.96}, {"td": "2022-08-19", "close": 20.43}, {"td": "2022-08-22", "close": 21.97}, {"td": "2022-08-23", "close": 21.83}, {"td": "2022-08-24", "close": 20.97}, {"td": "2022-08-25", "close": 22.95}, {"td": "2022-08-26", "close": 23.29}, {"td": "2022-08-29", "close": 22.76}, {"td": "2022-08-30", "close": 22.21}, {"td": "2022-08-31", "close": 23.77}, {"td": "2022-09-01", "close": 23.71}, {"td": "2022-09-02", "close": 22.42}, {"td": "2022-09-05", "close": 21.76}, {"td": "2022-09-06", "close": 22.06}, {"td": "2022-09-07", "close": 21.11}, {"td": "2022-09-08", "close": 20.85}, {"td": "2022-09-09", "close": 20.46}, {"td": "2022-09-13", "close": 20.8}, {"td": "2022-09-14", "close": 20.57}, {"td": "2022-09-15", "close": 21.22}, {"td": "2022-09-16", "close": 20.83}, {"td": "2022-09-19", "close": 21.43}, {"td": "2022-09-20", "close": 21.23}, {"td": "2022-09-21", "close": 20.88}, {"td": "2022-09-22", "close": 20.99}, {"td": "2022-09-23", "close": 20.04}, {"td": "2022-09-26", "close": 19.33}, {"td": "2022-09-27", "close": 21.15}, {"td": "2022-09-28", "close": 20.97}, {"td": "2022-09-29", "close": 20.76}, {"td": "2022-09-30", "close": 20.24}, {"td": "2022-10-10", "close": 20.39}, {"td": "2022-10-11", "close": 20.0}, {"td": "2022-10-12", "close": 21.08}, {"td": "2022-10-13", "close": 21.55}, {"td": "2022-10-14", "close": 21.62}, {"td": "2022-10-17", "close": 21.76}, {"td": "2022-10-18", "close": 21.54}, {"td": "2022-10-19", "close": 21.27}, {"td": "2022-10-20", "close": 22.03}, {"td": "2022-10-21", "close": 22.42}, {"td": "2022-10-24", "close": 21.19}, {"td": "2022-10-25", "close": 22.55}, {"td": "2022-10-26", "close": 22.55}, {"td": "2022-10-27", "close": 22.44}, {"td": "2022-10-28", "close": 22.3}, {"td": "2022-10-31", "close": 22.49}, {"td": "2022-11-01", "close": 23.53}, {"td": "2022-11-02", "close": 23.15}, {"td": "2022-11-03", "close": 23.68}, {"td": "2022-11-04", "close": 23.78}, {"td": "2022-11-07", "close": 24.33}, {"td": "2022-11-08", "close": 23.93}, {"td": "2022-11-09", "close": 24.89}, {"td": "2022-11-10", "close": 24.69}, {"td": "2022-11-11", "close": 26.16}, {"td": "2022-11-14", "close": 28.67}, {"td": "2022-11-15", "close": 28.26}, {"td": "2022-11-16", "close": 28.57}, {"td": "2022-11-17", "close": 26.62}, {"td": "2022-11-18", "close": 25.32}, {"td": "2022-11-21", "close": 25.47}, {"td": "2022-11-22", "close": 25.64}, {"td": "2022-11-23", "close": 25.99}, {"td": "2022-11-24", "close": 26.57}, {"td": "2022-11-25", "close": 27.92}, {"td": "2022-11-28", "close": 27.7}, {"td": "2022-11-29", "close": 28.76}, {"td": "2022-11-30", "close": 31.12}, {"td": "2022-12-01", "close": 33.3}, {"td": "2022-12-02", "close": 32.74}, {"td": "2022-12-05", "close": 34.11}, {"td": "2022-12-06", "close": 31.4}, {"td": "2022-12-07", "close": 33.37}, {"td": "2022-12-08", "close": 34.8}, {"td": "2022-12-09", "close": 34.38}, {"td": "2022-12-12", "close": 33.24}, {"td": "2022-12-13", "close": 32.82}, {"td": "2022-12-14", "close": 33.36}, {"td": "2022-12-15", "close": 32.32}, {"td": "2022-12-16", "close": 33.4}, {"td": "2022-12-19", "close": 32.07}, {"td": "2022-12-20", "close": 30.75}, {"td": "2022-12-21", "close": 31.42}, {"td": "2022-12-22", "close": 30.81}, {"td": "2022-12-23", "close": 31.02}, {"td": "2022-12-26", "close": 30.89}, {"td": "2022-12-27", "close": 31.44}, {"td": "2022-12-28", "close": 30.5}, {"td": "2022-12-29", "close": 31.96}, {"td": "2022-12-30", "close": 31.35}, {"td": "2023-01-03", "close": 30.78}, {"td": "2023-01-04", "close": 31.24}, {"td": "2023-01-05", "close": 30.58}, {"td": "2023-01-06", "close": 30.63}, {"td": "2023-01-09", "close": 32.74}, {"td": "2023-01-10", "close": 31.87}, {"td": "2023-01-11", "close": 33.44}, {"td": "2023-01-12", "close": 32.85}, {"td": "2023-01-13", "close": 32.21}, {"td": "2023-01-16", "close": 32.98}, {"td": "2023-01-17", "close": 30.18}, {"td": "2023-01-18", "close": 29.48}, {"td": "2023-01-19", "close": 27.1}, {"td": "2023-01-20", "close": 26.55}, {"td": "2023-01-30", "close": 26.93}, {"td": "2023-01-31", "close": 26.12}, {"td": "2023-02-01", "close": 26.51}, {"td": "2023-02-02", "close": 27.53}, {"td": "2023-02-03", "close": 28.69}, {"td": "2023-02-06", "close": 27.85}, {"td": "2023-02-07", "close": 27.91}, {"td": "2023-02-08", "close": 28.3}, {"td": "2023-02-09", "close": 28.15}, {"td": "2023-02-10", "close": 27.98}, {"td": "2023-02-13", "close": 28.06}, {"td": "2023-02-14", "close": 28.19}, {"td": "2023-02-15", "close": 27.77}, {"td": "2023-02-16", "close": 26.9}, {"td": "2023-02-17", "close": 27.36}, {"td": "2023-02-20", "close": 27.34}, {"td": "2023-02-21", "close": 27.13}, {"td": "2023-02-22", "close": 27.73}, {"td": "2023-02-23", "close": 27.52}, {"td": "2023-02-24", "close": 27.22}, {"td": "2023-02-27", "close": 27.34}, {"td": "2023-02-28", "close": 27.81}, {"td": "2023-03-01", "close": 27.5}, {"td": "2023-03-02", "close": 26.9}, {"td": "2023-03-03", "close": 26.62}, {"td": "2023-03-06", "close": 27.41}, {"td": "2023-03-07", "close": 26.97}, {"td": "2023-03-08", "close": 26.83}, {"td": "2023-03-09", "close": 26.3}, {"td": "2023-03-10", "close": 25.63}, {"td": "2023-03-13", "close": 25.78}, {"td": "2023-03-14", "close": 25.19}, {"td": "2023-03-15", "close": 25.08}, {"td": "2023-03-16", "close": 24.68}, {"td": "2023-03-17", "close": 24.89}, {"td": "2023-03-20", "close": 24.51}, {"td": "2023-03-21", "close": 25.17}, {"td": "2023-03-22", "close": 26.66}, {"td": "2023-03-23", "close": 26.23}, {"td": "2023-03-24", "close": 26.15}, {"td": "2023-03-27", "close": 25.94}, {"td": "2023-03-28", "close": 26.05}, {"td": "2023-03-29", "close": 25.63}, {"td": "2023-03-30", "close": 25.5}, {"td": "2023-03-31", "close": 25.49}, {"td": "2023-04-03", "close": 25.6}, {"td": "2023-04-04", "close": 25.68}, {"td": "2023-04-06", "close": 25.05}, {"td": "2023-04-07", "close": 25.11}, {"td": "2023-04-10", "close": 24.75}, {"td": "2023-04-11", "close": 24.62}, {"td": "2023-04-12", "close": 24.37}, {"td": "2023-04-13", "close": 25.71}, {"td": "2023-04-14", "close": 24.83}, {"td": "2023-04-17", "close": 24.73}, {"td": "2023-04-18", "close": 25.36}, {"td": "2023-04-19", "close": 24.62}, {"td": "2023-04-20", "close": 24.27}, {"td": "2023-04-21", "close": 23.71}, {"td": "2023-04-24", "close": 23.58}]}}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">log_rt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">test</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">shift</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 查看一下日回报的分布</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">log_rt</span><span class="p">)</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;close:Q&#39;</span><span class="p">,</span> <span class="nb">bin</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">y</span><span class="o">=</span> <span class="s1">&#39;count()&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div id="altair-viz-4b378fedf53a4c3c8bc56e3806e2ef82"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-4b378fedf53a4c3c8bc56e3806e2ef82") {
+      outputDiv = document.getElementById("altair-viz-4b378fedf53a4c3c8bc56e3806e2ef82");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.17.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "4.17.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"name": "data-3f8b49a9e0f38435ec9b5903d42e61fe"}, "mark": "bar", "encoding": {"x": {"bin": true, "field": "close", "type": "quantitative"}, "y": {"aggregate": "count", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-3f8b49a9e0f38435ec9b5903d42e61fe": [{"close": null}, {"close": 0.09531017980432493}, {"close": 0.0954085614267171}, {"close": 0.09517602064664324}, {"close": 0.0954727946514187}, {"close": 0.09531017980432474}, {"close": 0.09544455228504299}, {"close": 0.09540178705357585}, {"close": 0.09544896267874102}, {"close": 0.09523448244234174}, {"close": 0.09524135904795757}, {"close": 0.09533103507914593}, {"close": 0.09540497102672854}, {"close": 0.09539634584634105}, {"close": 0.04728734918857521}, {"close": 0.09525040872753104}, {"close": -0.019464967632991954}, {"close": -0.027183140912133565}, {"close": 0.015072929293977636}, {"close": -0.011010423706703933}, {"close": 0.07072742324950124}, {"close": 0.09527055570494242}, {"close": -0.05637399347469679}, {"close": -0.07846020792508261}, {"close": -0.01033129821250162}, {"close": -0.035598691717570324}, {"close": 0.003317800657816331}, {"close": -0.018144696429718173}, {"close": 0.03441539329531153}, {"close": -0.009824640428518092}, {"close": 0.0249181042299823}, {"close": -0.06358106667083288}, {"close": -0.02975918068051736}, {"close": -0.015218420188644492}, {"close": -0.026589964329423493}, {"close": -0.016228967936709308}, {"close": 0.09526167653438669}, {"close": 0.0014540757065596927}, {"close": -0.06693078943652399}, {"close": 0.0142259661971437}, {"close": 0.03412843766644467}, {"close": -0.0358317254228163}, {"close": -0.017367816834236962}, {"close": -0.06893092321373968}, {"close": 0.0013000280408348643}, {"close": -0.03129378827118049}, {"close": 0.01708794189719551}, {"close": 0.09527595139816719}, {"close": -0.0592243532919555}, {"close": 0.010117520812811769}, {"close": 0.016756185267862343}, {"close": -0.005139577108875984}, {"close": 0.004255325570138491}, {"close": 0.03117904741773802}, {"close": -0.017647516813578228}, {"close": -0.03300512498877312}, {"close": -0.032639494355005905}, {"close": -0.01049288248112729}, {"close": 0.011982918145149828}, {"close": -0.0020493719329168453}, {"close": -0.0005596493010541846}, {"close": -0.08364126278947252}, {"close": -0.04991678761579139}, {"close": 0.0}, {"close": -0.041141943331175185}, {"close": -0.03023013864852205}, {"close": -0.010591855871733107}, {"close": -0.09410719997109893}, {"close": 0.0673638749955879}, {"close": -0.043242102424192255}, {"close": 0.012581885479105465}, {"close": 0.007571168172721833}, {"close": 0.006306108697984695}, {"close": -0.0429801889297689}, {"close": 0.009295381588322344}, {"close": 0.0005000000104165892}, {"close": 0.0027455402245911732}, {"close": 0.04508011425176476}, {"close": -0.0021466913431633008}, {"close": 0.024296513001097166}, {"close": 0.002560224836150887}, {"close": -0.029486745330500035}, {"close": 0.011425975294098873}, {"close": -0.003794171020703467}, {"close": 0.024640458178530982}, {"close": -0.019663554908778136}, {"close": -0.03659532090592311}, {"close": -0.02156484608566673}, {"close": 0.02499202202278339}, {"close": 0.009001398814573127}, {"close": 0.010839561751055913}, {"close": 0.009300174341870566}, {"close": 0.015310627663334271}, {"close": 0.007220247973487097}, {"close": 0.027919433583651555}, {"close": -0.020520555899896074}, {"close": -0.0160226346595627}, {"close": 0.021306966312930775}, {"close": 0.03046608188821085}, {"close": -0.014553038664915526}, {"close": 0.014997483116675822}, {"close": -0.007582551940813945}, {"close": 0.020824855359581715}, {"close": -0.013464500953289257}, {"close": -0.020656324925660753}, {"close": 0.021322769468821244}, {"close": -0.01950953234464053}, {"close": 0.0458095360312942}, {"close": 0.0028080804714168584}, {"close": 0.028913578758164332}, {"close": 0.039244892369634146}, {"close": -0.01912181940474}, {"close": -0.03129166445631341}, {"close": -0.009367750003600047}, {"close": -0.07897376048463137}, {"close": -0.06453852113757129}, {"close": 0.005908436686166268}, {"close": 0.012683096844445959}, {"close": -0.005833754998871132}, {"close": -0.0159728177793852}, {"close": -0.06922291316089965}, {"close": 0.0160635448808037}, {"close": -0.0179235161889047}, {"close": 0.0015944728331574547}, {"close": -0.04841848603841081}, {"close": -0.06654722619865183}, {"close": -0.042287669427706405}, {"close": 0.024859343676253025}, {"close": 0.00030307622599010987}, {"close": -0.011275450861250886}, {"close": -0.04866758510578269}, {"close": 0.0064143901776637004}, {"close": 0.09536830413227856}, {"close": 0.06388442757887516}, {"close": -0.024283753981609504}, {"close": -0.0075704833737187715}, {"close": 0.02419136460975916}, {"close": -0.024754427687698474}, {"close": -0.012468282802909752}, {"close": -0.01696661835659445}, {"close": -0.010495723172014014}, {"close": 0.0005859947428161912}, {"close": 0.03737140837058549}, {"close": -0.0028256588453296505}, {"close": 0.02927854473251801}, {"close": 0.024162978193321916}, {"close": -0.007539077173165975}, {"close": -0.03436764350420777}, {"close": 0.0016769148703248188}, {"close": -0.07899606207682047}, {"close": -0.0588130271180843}, {"close": 0.01904819497069463}, {"close": 0.0009429515078701409}, {"close": 0.0291042214167219}, {"close": 0.01484201105405824}, {"close": -0.05659262295530539}, {"close": 0.06049360314608693}, {"close": 0.009241383402752937}, {"close": 0.024620235360216302}, {"close": 0.011227986100208106}, {"close": -0.02904648002260187}, {"close": 0.037598413557007375}, {"close": -0.03759841355700743}, {"close": 0.06143911639828399}, {"close": 0.048156450586753864}, {"close": 0.015203438320914888}, {"close": -0.0311782189286493}, {"close": -0.006191970247920995}, {"close": -0.0037878833169370917}, {"close": -0.02358858684858237}, {"close": -0.006124740749660544}, {"close": 0.03781272392663719}, {"close": 0.00669974367241271}, {"close": -0.017513582492708242}, {"close": 0.00406890565441082}, {"close": -0.001896762525040716}, {"close": 0.016409245124168203}, {"close": -0.005082263179491979}, {"close": -0.015948439130204797}, {"close": -0.001909178269801557}, {"close": -0.01707089912993924}, {"close": 0.04320737273506501}, {"close": -0.03739259794058152}, {"close": -0.05126423264587839}, {"close": -0.004076883922871371}, {"close": -0.004093572967901838}, {"close": -0.012085629784961065}, {"close": -0.09415426450200987}, {"close": 0.03301052813500226}, {"close": 0.0022043781560641077}, {"close": -0.003781914372162845}, {"close": -0.00031580609768241166}, {"close": 0.016291087111371057}, {"close": 0.005268879382672479}, {"close": -0.01494889251766457}, {"close": 0.034236188702207654}, {"close": -0.011589028758790731}, {"close": -0.00030679552319167255}, {"close": -0.006155759666232302}, {"close": -0.02469261259037152}, {"close": 0.00473560474583425}, {"close": -0.011403354484838481}, {"close": 0.006667749739004235}, {"close": 0.0015810279973187732}, {"close": 0.009434032233358714}, {"close": -0.01704586727298861}, {"close": -0.01604655740653019}, {"close": 0.014453439338182201}, {"close": 0.005406278074762449}, {"close": 0.016669673624437383}, {"close": 0.0006236358169067733}, {"close": 0.009616950184924233}, {"close": 0.0049276354713401836}, {"close": 0.01191035609491603}, {"close": -0.022410761406386745}, {"close": 0.005572769840130451}, {"close": 0.00921948755288134}, {"close": 0.020288356754426758}, {"close": 0.010733555643108633}, {"close": -0.023403408384160423}, {"close": 0.009667749015287266}, {"close": -0.005426603609291045}, {"close": -0.0024213086890102274}, {"close": -0.008826719916187694}, {"close": -0.012613611321681765}, {"close": 0.0033997869248450613}, {"close": -0.007432675902520916}, {"close": 0.024260363790336}, {"close": -0.020537120271087166}, {"close": 0.011393502772135198}, {"close": -0.010464853889424322}, {"close": -0.007453450654580891}, {"close": 0.02523987477301245}, {"close": -0.005791816221033603}, {"close": 0.008220475581160286}, {"close": 0.0189223246055616}, {"close": -0.010768874635151113}, {"close": -0.05121415228786928}, {"close": 0.0018975337761914111}, {"close": 0.0009474183560400329}, {"close": -0.013346241952894487}, {"close": 0.008282939996347834}, {"close": 0.00600982356057773}, {"close": 0.01284680052830497}, {"close": 0.0015554521723741726}, {"close": 0.0257762046141666}, {"close": 0.019796687307881516}, {"close": -0.035059498857169295}, {"close": 0.09444293771950449}, {"close": -0.014376568967258313}, {"close": -0.0171825533199969}, {"close": -0.03408085418938518}, {"close": 0.02421139817090118}, {"close": 0.017351505311199927}, {"close": -0.004021838227819994}, {"close": -0.019181058851844}, {"close": 0.004975862747119427}, {"close": -0.058000331055339666}, {"close": 0.0021634995303432187}, {"close": -0.009616950184924282}, {"close": -0.003122075592505518}, {"close": 0.001562256215258684}, {"close": 0.045767596857070346}, {"close": 0.008611782992297062}, {"close": 0.0}, {"close": -0.004742154707774367}, {"close": -0.02283753099133367}, {"close": -0.011617373091716237}, {"close": -0.0083372414378284}, {"close": 0.00464037955650208}, {"close": -0.0015444018513740248}, {"close": -0.0579042142001231}, {"close": -0.005254527689129112}, {"close": 0.01308491027629305}, {"close": -0.021018836191740612}, {"close": -0.03443959538467799}, {"close": 0.005139637834446414}, {"close": -0.026317308317373417}, {"close": 0.009776614184616991}, {"close": -0.0073234852165400535}, {"close": -0.01338991111666053}, {"close": 0.002480072130360157}, {"close": -0.03419444177076781}, {"close": -0.035784660498242186}, {"close": 0.00981881000222639}, {"close": 0.0022522532043252746}, {"close": 0.05365271349232}, {"close": -0.010359085312949913}, {"close": -0.0170201465129903}, {"close": 0.006189715738620779}, {"close": 0.009393132646949943}, {"close": -0.003963255052580638}, {"close": -0.03191174875576005}, {"close": 0.008535958305109299}, {"close": 0.013216051391526462}, {"close": -0.01728937677916221}, {"close": 0.0}, {"close": -0.03858269780443309}, {"close": 0.025134605704355484}, {"close": -0.0026360399372666473}, {"close": 0.03846628082779593}, {"close": -0.01683171825980254}, {"close": -0.0011076242594454972}, {"close": 0.005158449168945212}, {"close": 0.012417982803768619}, {"close": -0.007286006730933208}, {"close": 0.0}, {"close": 0.011270797368621998}, {"close": -0.02008466272603805}, {"close": 0.004416643175094201}, {"close": -0.0062626839430263434}, {"close": -0.034589914546566035}, {"close": 0.012923022872731569}, {"close": 0.0063994195430460464}, {"close": 0.002248876510015973}, {"close": -0.00037446171566575586}, {"close": 0.02587944798782076}, {"close": -0.006223706708356298}, {"close": 0.0025673955052457334}, {"close": -0.008091254146839888}, {"close": 0.006624978224312442}, {"close": -0.006255770171382908}, {"close": 0.009917436657345924}, {"close": 0.006920442844573757}, {"close": -0.10394993607884838}, {"close": -0.05974401892398752}, {"close": -0.009881927891293234}, {"close": -0.10363488969035654}, {"close": 0.018035609899363942}, {"close": 0.013084298814440475}, {"close": -0.026342068760091365}, {"close": 0.02122220651733443}, {"close": -0.00046674446588282906}, {"close": 0.0018656721829496967}, {"close": 0.018467745545839954}, {"close": 0.005929321818277168}, {"close": 0.030454659952767898}, {"close": 0.0004410143401136386}, {"close": -0.007968169649176845}, {"close": 0.007968169649176881}, {"close": -0.0026490081715768417}, {"close": -0.007098521377677291}, {"close": 0.018527217201300027}, {"close": -0.01585936324010751}, {"close": 0.00796112121586742}, {"close": 0.02565915940889268}, {"close": 0.014916108641647887}, {"close": -0.012771565679487505}, {"close": -0.00860590509287942}, {"close": -0.026271213153900373}, {"close": 0.026271213153900415}, {"close": -0.0060685058363809}, {"close": -0.0013051992281428672}, {"close": 0.017264131849759837}, {"close": 0.03531262239920047}, {"close": -0.0907357760806123}, {"close": -0.007262855348174537}, {"close": 0.01581953894489281}, {"close": -0.0013461971967968444}, {"close": 0.024834979272427917}, {"close": 0.01521437736990156}, {"close": -0.00910082121059886}, {"close": -0.012705537841455521}, {"close": 0.01401073706959837}, {"close": -0.01005033585350145}, {"close": 0.02343857297201738}, {"close": 0.012364258983898768}, {"close": 0.01053750530278592}, {"close": 0.02525491292467614}, {"close": -0.034945319489810014}, {"close": -0.030520314303812173}, {"close": 0.0013086152358205007}, {"close": -0.005683075404928127}, {"close": -0.032526814887402174}, {"close": -0.004084416842224736}, {"close": 0.01936561307734419}, {"close": 0.003561891566360528}, {"close": -0.03068832880544973}, {"close": -0.011523520003859696}, {"close": -0.016359327215228016}, {"close": 0.01959932079244375}, {"close": 0.005070303556412225}, {"close": 0.017320396528265197}, {"close": 0.030703190370971436}, {"close": -0.002193464358281382}, {"close": 0.030279129787283893}, {"close": -0.03600475652794986}, {"close": -0.00575859841634124}, {"close": 0.05067115509716399}, {"close": 0.06814792002138727}, {"close": -0.043537710298682225}, {"close": 0.09392329501205271}, {"close": 0.01968494389381669}, {"close": -0.01035129390556495}, {"close": -0.02903125654273851}, {"close": -0.005754859542677121}, {"close": 0.01451515171179651}, {"close": -0.004180131490545168}, {"close": -0.036452271598674785}, {"close": -0.013118852429114532}, {"close": 0.09389042310867865}, {"close": -0.005113232469925996}, {"close": -0.014012028662106097}, {"close": 0.015109924472295946}, {"close": 0.011997962503031102}, {"close": -0.05382631546328088}, {"close": -0.028236259947529676}, {"close": -0.017412390857150194}, {"close": 0.09294847464628046}, {"close": 0.09269424096260104}, {"close": -0.06506916588337394}, {"close": -0.0316345573960787}, {"close": -0.10220018727081287}, {"close": 0.05508867181874034}, {"close": 0.033505863396293814}, {"close": 0.006274240918473341}, {"close": 0.04425978714309903}, {"close": -0.0028198820236714313}, {"close": -0.03740097912217801}, {"close": -0.06080785589848671}, {"close": 0.03331726886618754}, {"close": 0.029686781180042462}, {"close": -0.0073394824880459114}, {"close": -0.009250759772150998}, {"close": -0.07886620052522832}, {"close": -0.01662987016168405}, {"close": 0.010982416668608927}, {"close": -0.005272776361388804}, {"close": -0.06597645293436466}, {"close": 0.023186955489649424}, {"close": 0.013909602554332311}, {"close": -0.015183758598447018}, {"close": 0.004240888459545225}, {"close": 0.022595103516575187}, {"close": -0.029389184852459577}, {"close": 0.0008517888078892742}, {"close": -0.0029844405012499934}, {"close": 0.02237796568735282}, {"close": 0.0029184927949132172}, {"close": 0.00166389389469538}, {"close": -0.008766493212182438}, {"close": -0.04064730677415641}, {"close": -0.0061323013020637175}, {"close": 0.017422043446664197}, {"close": -0.05914148214294203}, {"close": 0.00775728279646333}, {"close": -0.0764884255637372}, {"close": -0.008376496379049053}, {"close": -0.07498377899910982}, {"close": 0.0026631174194836284}, {"close": 0.019489687221649593}, {"close": 0.017580597577466675}, {"close": -0.005654088565737603}, {"close": -0.017681167843226445}, {"close": -0.02120970280685816}, {"close": -0.039349338788547655}, {"close": 0.0033389012655146303}, {"close": 0.018167303955448934}, {"close": -0.031590324287589476}, {"close": 0.022823144844055825}, {"close": -0.012739025777429826}, {"close": 0.013289232118682706}, {"close": -0.016080191228704972}, {"close": -0.0016783220722748843}, {"close": -0.018079588504316003}, {"close": -0.05027359001343623}, {"close": 0.016647233433156428}, {"close": 0.03019973986363241}, {"close": -0.030789536400930177}, {"close": 0.0}, {"close": 0.010563478509569246}, {"close": -0.047827405353654796}, {"close": 0.01820438622246253}, {"close": 0.01728806097324099}, {"close": -0.0035524016043679946}, {"close": -0.024010757324785567}, {"close": -0.00854184571296279}, {"close": 0.014598799421152631}, {"close": 0.007220247973487097}, {"close": -0.004205473305397168}, {"close": 0.04933472502323264}, {"close": -0.028482018284679122}, {"close": 0.0017673053200835797}, {"close": -0.03290754605580657}, {"close": 0.008479760079114773}, {"close": -0.03936547634507985}, {"close": 0.005006268278144222}, {"close": 0.009937969990132493}, {"close": -0.09933557616726933}, {"close": -0.04181793968332148}, {"close": -0.027418745043896627}, {"close": -0.0029304050274168883}, {"close": 0.010945019877071097}, {"close": -0.005822432751433253}, {"close": 0.028069493076509723}, {"close": 0.041701664275196976}, {"close": -0.019244580174355222}, {"close": 0.015835098521734817}, {"close": -0.01583509852173477}, {"close": 0.001386962774348806}, {"close": -0.016771881613828213}, {"close": 0.009817750668129229}, {"close": 0.018666286874210344}, {"close": 0.0034188067487856823}, {"close": 0.028265677175327675}, {"close": 0.03776490434775812}, {"close": -0.01286191364240781}, {"close": -0.004541039266256499}, {"close": -0.0052151356791081595}, {"close": -0.00853303503794898}, {"close": 0.0202290748011402}, {"close": 0.012199188206348278}, {"close": -0.002555911934544206}, {"close": 0.019639528928683626}, {"close": 0.028449661468083608}, {"close": 0.006684923101884018}, {"close": -0.046491173502303695}, {"close": 0.0050633019565466345}, {"close": 0.0018921481520379623}, {"close": -0.05238831216657011}, {"close": 0.046067178603199456}, {"close": -0.012121360532344737}, {"close": 0.0006416426270830401}, {"close": -0.035916364547991436}, {"close": 0.008606474838747213}, {"close": 0.036885449628816375}, {"close": 0.034959864823459454}, {"close": -0.014210928063295462}, {"close": -0.022020392748360755}, {"close": 0.006973086891860315}, {"close": 0.02186903773742473}, {"close": -0.011187189390564381}, {"close": -0.004384598317824099}, {"close": 0.0006275494401118305}, {"close": -0.00945484509451825}, {"close": -0.04071644805332505}, {"close": -0.00462810743446805}, {"close": -0.01872964450005002}, {"close": 0.0026972369690011593}, {"close": 0.002689981447209157}, {"close": 0.0}, {"close": -0.025851779799821225}, {"close": -0.0027605262527039126}, {"close": -0.024485308578296554}, {"close": 0.007760180036664982}, {"close": 0.01741597485580935}, {"close": -0.002766253492890185}, {"close": 0.020562753296510507}, {"close": 0.014146413075504878}, {"close": 0.014608493523745481}, {"close": -0.011936481245934537}, {"close": 0.0}, {"close": 0.014569794156695235}, {"close": -0.007258362450322954}, {"close": 0.0131580845775112}, {"close": 0.09054542987268556}, {"close": -0.015644121699568046}, {"close": -0.018978224941161834}, {"close": -0.0018558619616801562}, {"close": -0.019381663282385705}, {"close": 0.002522069432709939}, {"close": 0.029167441524272825}, {"close": -0.011688844250313172}, {"close": 0.01656987895622746}, {"close": 0.0036452045223308357}, {"close": -0.08607460877124279}, {"close": -0.05711953585848857}, {"close": 0.02624460021311436}, {"close": 0.01957538039144099}, {"close": 0.009314771274547388}, {"close": 0.008572423086191907}, {"close": -0.0019717390548398134}, {"close": 0.014369940282952826}, {"close": 0.02687301825109627}, {"close": -0.005063301956546762}, {"close": 0.015113637810048106}, {"close": 0.000624804768842178}, {"close": 0.006226670180259515}, {"close": 0.034170499573819804}, {"close": -0.0060168653242312214}, {"close": -0.003627573506434843}, {"close": 0.003627573506434726}, {"close": -0.006053287248922675}, {"close": 0.006053287248922645}, {"close": 0.016756825359899204}, {"close": 0.024620235360216302}, {"close": 0.019496030349527516}, {"close": -0.069357990458938}, {"close": 0.0299782640958672}, {"close": 0.015240623249713935}, {"close": 0.006956549793359931}, {"close": -0.026933712389747}, {"close": 0.03269409698172689}, {"close": 0.03499228343512818}, {"close": -0.021301253835920225}, {"close": -0.007963637081545141}, {"close": -0.005153174873403763}, {"close": 0.02326346045069213}, {"close": -0.027289925482180705}, {"close": -0.041783070999805716}, {"close": 0.020226745490138708}, {"close": -0.020827887678364986}, {"close": 0.027285203922663228}, {"close": 0.027130091079470994}, {"close": 0.0379933964392148}, {"close": 0.03023988518971839}, {"close": -0.022049831219673844}, {"close": -0.012035156208149884}, {"close": -0.0027555817932465414}, {"close": -0.008312599819365697}, {"close": 0.01874365789095167}, {"close": -0.01319425408228214}, {"close": -0.029769117660100246}, {"close": -0.00399886279807185}, {"close": 0.014772995940151473}, {"close": -0.012485973788355989}, {"close": 0.012485973788356006}, {"close": 0.005624311788932486}, {"close": 0.01888945053303088}, {"close": 0.030888394402196175}, {"close": -0.06731719130203075}, {"close": 0.09156719352549043}, {"close": -0.02052163572079691}, {"close": 0.043179659613380945}, {"close": 0.09187900844995178}, {"close": 0.09179940065529264}, {"close": 0.09222375760113535}, {"close": -0.10201732108193313}, {"close": -0.04373237304872837}, {"close": 0.016404712820351563}, {"close": -0.07722492819399943}, {"close": 0.05947823351266425}, {"close": -0.020805816087274265}, {"close": 0.03193435292613154}, {"close": -0.10148235365815843}, {"close": -0.041005744865304006}, {"close": -0.027952130383739327}, {"close": -0.05392141679381998}, {"close": 0.0011074198252471437}, {"close": 0.030520080009359792}, {"close": -0.007543139214463643}, {"close": 0.03141062062110694}, {"close": 0.01301762720009904}, {"close": -0.03849671250108384}, {"close": -0.03390155167568146}, {"close": -0.004459316196764987}, {"close": 0.03242933255232411}, {"close": 0.013430231411242746}, {"close": 0.02529112673187023}, {"close": 0.07563052290554184}, {"close": -0.03935579222298491}, {"close": 0.010978154167988566}, {"close": -0.05561239016663598}, {"close": 0.012513197684784004}, {"close": -0.02731262213072305}, {"close": 0.014274627792593033}, {"close": 0.01251972534492763}, {"close": 0.04262441273406235}, {"close": -0.011994146785819166}, {"close": -0.014177452657625983}, {"close": 0.03753255147406718}, {"close": 0.021380795024950255}, {"close": -0.004336311299779482}, {"close": 0.04853720628557051}, {"close": 0.024086599576212987}, {"close": 0.002242656243834021}, {"close": -0.05858257738471979}, {"close": 0.01133691877699754}, {"close": 0.035981741363256894}, {"close": -0.047793832399136}, {"close": -0.03629723403178569}, {"close": 0.01273278710452037}, {"close": 0.005822432751433229}, {"close": 0.02295653179860998}, {"close": -0.014765688607120716}, {"close": -0.029213372465901395}, {"close": -0.040328045386971656}, {"close": -0.004123717183862152}, {"close": -0.04706128763728242}, {"close": 0.02195536650620611}, {"close": 0.009488737508701453}, {"close": 0.025383388205318783}, {"close": -0.018585976411766174}, {"close": -0.0047009749670243114}, {"close": 0.0062630684895620525}, {"close": -0.01626052087178029}, {"close": 0.01313388987234843}, {"close": -0.041561655615173505}, {"close": -0.00874322509572875}, {"close": 0.005473467414172128}, {"close": -0.024870030074647522}, {"close": -0.0005597537229837849}, {"close": -0.005614837884328891}, {"close": 0.031044621681960108}, {"close": -0.006022465506467596}, {"close": -0.004954593124683341}, {"close": 0.0}, {"close": 0.001103144072157168}, {"close": 0.019651287397288494}, {"close": -0.005963693468049351}, {"close": 0.0043407555949188424}, {"close": -0.01143491904432604}, {"close": -0.009906520202792165}, {"close": -0.013363227812167028}, {"close": 0.034163101922842824}, {"close": 0.07158971345699829}, {"close": -0.049622583151245674}, {"close": -0.029580000134474704}, {"close": 0.018388836173213574}, {"close": -0.0010723861617525938}, {"close": 0.0016081482961861253}, {"close": 0.006938912282272212}, {"close": 0.013210231736806482}, {"close": 0.01251972534492763}, {"close": 0.01441095449034728}, {"close": -0.02850672429074067}, {"close": 0.0036735806204119766}, {"close": -0.007360706209220969}, {"close": -0.021873371390726322}, {"close": 0.03237215548894586}, {"close": 0.015030083405638073}, {"close": 0.017843960582181167}, {"close": -0.0035434104399849784}, {"close": -0.02152825326364944}, {"close": 0.09058873571712532}, {"close": -0.027346391041000995}, {"close": -0.02262762552193421}, {"close": -0.014028286163188207}, {"close": -0.08252644887334144}, {"close": -0.022721952876637166}, {"close": 0.003916088920757186}, {"close": -0.003916088920757083}, {"close": 0.018328755256216685}, {"close": -0.02113538073033621}, {"close": -0.01700721264723311}, {"close": 0.024845998586530804}, {"close": 0.031295444467237664}, {"close": -0.004333701257118305}, {"close": 0.0021691982475453135}, {"close": -0.018589928459872836}, {"close": -0.013892971443496613}, {"close": 0.01112977543280046}, {"close": -0.04354660310040387}, {"close": -0.013383964697384097}, {"close": -0.027919841443851606}, {"close": 0.0024067400305648376}, {"close": 0.012541221405308181}, {"close": -0.012541221405308205}, {"close": 0.0006007810333902144}, {"close": -0.017570885251851732}, {"close": 0.001832061581137315}, {"close": -0.007963288636073752}, {"close": -0.028065452898283955}, {"close": 0.006305191128314871}, {"close": -0.00504096845677474}, {"close": 0.00692479946914825}, {"close": -0.0196395289286837}, {"close": -0.015474196582597365}, {"close": 0.026924703370592683}, {"close": 0.012570875787242709}, {"close": -0.006265684658927862}, {"close": -0.015199785981766103}, {"close": -0.009618541612856805}, {"close": -0.008411566904284804}, {"close": -0.005865119452398022}, {"close": -0.00458566149131932}, {"close": 0.0}, {"close": 0.014341836436684057}, {"close": 0.005164633816841171}, {"close": 0.0019298815896498756}, {"close": 0.0019261643194396544}, {"close": 0.017170533137016847}, {"close": 0.0006303183316156856}, {"close": 0.008782992470305843}, {"close": -0.006894417782437524}, {"close": 0.03643502734532158}, {"close": -0.005472801741354776}, {"close": 0.003651860418771239}, {"close": 0.004848494346621432}, {"close": 0.014406011443514916}, {"close": 0.036857052741037476}, {"close": -0.010392703240259414}, {"close": -0.026464349500778136}, {"close": 0.032251402688454514}, {"close": -0.009275428818130406}, {"close": -0.0005825808495679805}, {"close": 0.018476276167573212}, {"close": -0.008041398874993638}, {"close": 0.005750447128437938}, {"close": 0.06654339077661148}, {"close": -0.009162015046296634}, {"close": 0.0345871134121067}, {"close": -0.0259617230097582}, {"close": -0.032736147398271104}, {"close": 0.007734845192853907}, {"close": 0.025001302205417186}, {"close": 0.0}, {"close": -0.01296614599726731}, {"close": -0.017553934012092594}, {"close": -0.0011074198252472003}, {"close": -0.010022355607553202}, {"close": 0.005023733702716775}, {"close": -0.026517773843542935}, {"close": -0.021381918316914467}, {"close": -0.0447969793305525}, {"close": -0.09879823523320284}, {"close": -0.051186830239251885}, {"close": 0.0558958870408247}, {"close": 0.011344799686990542}, {"close": -0.005322700523897709}, {"close": 0.01850680711603464}, {"close": -0.01384789685879349}, {"close": 0.020375335178756955}, {"close": -0.021704239028810773}, {"close": -0.0013306721857050613}, {"close": 0.026282721799194813}, {"close": 0.04687368495776594}, {"close": 0.0030892826546353616}, {"close": 0.047585008308631244}, {"close": -0.008269391482506742}, {"close": 0.004143243571334591}, {"close": -0.01727776075198131}, {"close": -0.013309331368780267}, {"close": 0.022283367065167186}, {"close": -0.0690354147215199}, {"close": 0.030790996725019955}, {"close": 0.004322328433550584}, {"close": 0.05630229338288431}, {"close": 0.03378506265463974}, {"close": -0.031458127340575945}, {"close": -0.03187991346074537}, {"close": 0.01724693360105439}, {"close": 0.014632979859690958}, {"close": 0.04765507455544188}, {"close": -0.01563404261232997}, {"close": 0.015079872467917609}, {"close": 0.056573123103178774}, {"close": -0.030313408519622942}, {"close": 0.011809047592242819}, {"close": 0.01850436092738019}, {"close": -0.07559999815787286}, {"close": 0.030052345066401837}, {"close": 0.05596984227145246}, {"close": -0.014621670417299825}, {"close": -0.03751779781391861}, {"close": -0.03049862112239523}, {"close": 0.04675033309013526}, {"close": -0.046750333090135314}, {"close": -0.016463613418059006}, {"close": -0.010935360770055452}, {"close": 0.03525094947079966}, {"close": 0.011663559048612717}, {"close": 0.030989160905374544}, {"close": -0.00429185208154092}, {"close": 0.01282068842906125}, {"close": 0.03340602906617204}, {"close": -0.02232119664167908}, {"close": 0.0015735644474303165}, {"close": -0.031410620621107}, {"close": 0.01022338740166305}, {"close": 0.09101832772278391}, {"close": 0.09103552728935513}, {"close": -0.00896464990649948}, {"close": -0.06175087489189822}, {"close": -0.026202372394024072}, {"close": 0.006859409550893202}, {"close": -0.037815450996817795}, {"close": 0.012597798253234588}, {"close": 0.09134183012605657}, {"close": 0.09081279569346833}, {"close": 0.016146076281350244}, {"close": -0.002878883337301316}, {"close": 0.01552953154490079}, {"close": 0.012092045765028772}, {"close": 0.09144198536676323}, {"close": -0.03686881923368378}, {"close": 0.006051455683355282}, {"close": 0.04461569431002497}, {"close": -0.08109507032459146}, {"close": -0.02695367292359456}, {"close": -0.01701823892492044}, {"close": 0.05602259217811953}, {"close": 0.05670751364228704}, {"close": -0.01175187964877704}, {"close": -0.021281370634033275}, {"close": 0.017580404159462045}, {"close": 0.025623656647196114}, {"close": -0.053444999920052326}, {"close": -0.003054603367850444}, {"close": 0.0007645260311226195}, {"close": -0.05538426872565908}, {"close": -0.005670327060087903}, {"close": 0.002839182600780597}, {"close": -0.0044651992191995305}, {"close": -0.031827443639117374}, {"close": 0.02734221695580896}, {"close": -0.014406505595595549}, {"close": 0.011951512545883926}, {"close": 0.016656895371592387}, {"close": -0.02282087626055706}, {"close": -0.0008247423147904947}, {"close": 0.012300278081651687}, {"close": 0.01456336418789651}, {"close": -0.024391453124159124}, {"close": -0.01576142126407176}, {"close": 0.024366268457590285}, {"close": 0.059784275544338024}, {"close": -0.0030792941960613813}, {"close": -0.010463184005248718}, {"close": 0.008147474749650725}, {"close": 0.01761822668243518}, {"close": 0.0037893186683505132}, {"close": 0.05123656055431373}, {"close": -0.01849554083521002}, {"close": 0.09191028985886891}, {"close": 0.013596627965970899}, {"close": -0.013930573535946797}, {"close": -0.10076927536527257}, {"close": -0.022036372557402383}, {"close": 0.02461892333791566}, {"close": -0.0003685277358827346}, {"close": 0.04433957499308641}, {"close": -0.005657723719858837}, {"close": -0.07394431942444733}, {"close": -0.036155541597275465}, {"close": 0.02656406196595279}, {"close": 0.04042098891622641}, {"close": -0.0025949968223063138}, {"close": 0.032861664484000824}, {"close": 0.09158066326235942}, {"close": -0.04731632455113147}, {"close": 0.05645178775896219}, {"close": -0.016702533367160866}, {"close": -0.03940567081171622}, {"close": -0.0006872852504216326}, {"close": 0.0051431623744673605}, {"close": -0.04870466850828467}, {"close": -0.01775087361894343}, {"close": 0.01775087361894338}, {"close": 0.014260491219156799}, {"close": 0.016152036540522653}, {"close": 0.021024382885478036}, {"close": 0.0044240330791450325}, {"close": 0.06634080097871985}, {"close": 0.0003177124728870421}, {"close": -0.04582442654876475}, {"close": -0.07203802776310261}, {"close": 0.053578030494936625}, {"close": -0.1011537786848488}, {"close": -0.04798464161339469}, {"close": -0.021061775963366343}, {"close": 0.0016051367812286584}, {"close": -0.03592222970535763}, {"close": -0.021849608714402183}, {"close": 0.010143789430505255}, {"close": 0.003358525407134224}, {"close": -0.03453764722711247}, {"close": -0.0416357745733027}, {"close": 0.024571260730505327}, {"close": -0.005753501155707176}, {"close": 0.005753501155707071}, {"close": -0.02141027367763925}, {"close": 0.0013516559841152537}, {"close": 0.012528128064888216}, {"close": 0.03666932006211438}, {"close": -0.02341824277574565}, {"close": -0.003956918770235895}, {"close": -0.03359778496617667}, {"close": -0.012838323972912525}, {"close": -0.02192763387030104}, {"close": 0.010790627807518851}, {"close": -0.001868286391171389}, {"close": 0.018527625862214174}, {"close": 0.02223826610255479}, {"close": 0.0026893785819712434}, {"close": -0.011253776209028824}, {"close": -0.018273692593242737}, {"close": -0.00972905519811915}, {"close": -0.003731347612858247}, {"close": 0.015762959665257554}, {"close": -0.014362072207577658}, {"close": -0.021222206517334523}, {"close": -0.05839284335367683}, {"close": -0.0157884614000852}, {"close": 0.011737822950239816}, {"close": -0.01379332213233576}, {"close": 0.008706841175961894}, {"close": -0.055030912850200404}, {"close": -0.02399242674322108}, {"close": 0.04531519621204249}, {"close": 0.02087758502155518}, {"close": 0.0020639842208514275}, {"close": -0.010883756049673754}, {"close": 0.023688028295661582}, {"close": -0.005613691700633555}, {"close": -0.012876819696998951}, {"close": 0.007231436471711073}, {"close": -0.027127380718982616}, {"close": 0.032772763944270436}, {"close": -0.016512243072490294}, {"close": -0.0010411245084105038}, {"close": 0.008298802814695064}, {"close": -0.006737522247742502}, {"close": 0.005186733619551051}, {"close": 0.0015507886281915374}, {"close": -0.026696167954411053}, {"close": -0.015504186535965424}, {"close": 0.028155910379601783}, {"close": -0.009473755067290155}, {"close": 0.047000646231475735}, {"close": 0.0312913535869688}, {"close": 0.07623633777983435}, {"close": -0.008189308733873404}, {"close": 0.02347737627806414}, {"close": -0.04331655061028323}, {"close": -0.03316267890486445}, {"close": -0.010167117355444313}, {"close": -0.03415328232521717}, {"close": 0.006524489895282126}, {"close": -0.0243049938772887}, {"close": 0.038708024087962575}, {"close": -0.013902905168991493}, {"close": -0.025317807984289897}, {"close": -0.008238975544552845}, {"close": -0.006224086483001842}, {"close": 0.022125934773123846}, {"close": -0.03680125055733787}, {"close": 0.0021097054238496567}, {"close": -0.018612608568284828}, {"close": -0.023901192083466083}, {"close": 0.0016478993017812922}, {"close": 0.011459879849919613}, {"close": 0.01668050512854404}, {"close": 0.035128120370642855}, {"close": -0.025568833557186577}, {"close": -0.03386510122095799}, {"close": -0.02603304036011096}, {"close": -0.05953795095321381}, {"close": 0.03568673513103378}, {"close": -0.024434025337282023}, {"close": 0.00645731624429831}, {"close": 0.0023378152085289593}, {"close": 0.014488807501217378}, {"close": -0.0017276134443775877}, {"close": 0.005747142255567851}, {"close": 0.01422499093134726}, {"close": -0.0028288562004777137}, {"close": -0.028154689319489418}, {"close": -0.00936775000360016}, {"close": 0.0017631506183810029}, {"close": -0.010032542100887592}, {"close": -0.041168040943363744}, {"close": -0.019975695423643695}, {"close": -0.013329299220539631}, {"close": -0.035776173165283594}, {"close": -0.02616720920753238}, {"close": 0.0360519684400744}, {"close": 0.01238204154320946}, {"close": 0.0032331098321471624}, {"close": 0.0}, {"close": 0.037381609322042944}, {"close": 0.019095129004918124}, {"close": 0.00426180249318536}, {"close": -0.012225091129259154}, {"close": -0.008647367041182295}, {"close": -0.028951046515825297}, {"close": 0.0019138761822841976}, {"close": 0.01956515549484006}, {"close": -0.004384598317824099}, {"close": 0.008750055827464152}, {"close": -0.005616239411292635}, {"close": 0.05301271646024208}, {"close": 0.04070329311350397}, {"close": -0.01840189937203657}, {"close": 0.0046323186482795965}, {"close": 0.018317627221660967}, {"close": -0.016586025057383002}, {"close": -0.015693434546046565}, {"close": -0.0011723330768234393}, {"close": 0.02490716649786354}, {"close": 0.013636574949545444}, {"close": -0.0062270226688200805}, {"close": 0.003967134701382718}, {"close": -0.002832060799718507}, {"close": -0.003978408202808301}, {"close": -0.0189715376671323}, {"close": 0.026347457631855732}, {"close": -0.00794555825981917}, {"close": -0.0005699629678378702}, {"close": 0.08886257011351624}, {"close": -0.018957913744614273}, {"close": 0.013203254913116969}, {"close": 0.0015727395116003275}, {"close": 0.00574564129607967}, {"close": 0.0020811662038244493}, {"close": 0.021085893077709906}, {"close": 0.006593987879296038}, {"close": -0.01016268909220192}, {"close": 0.006617484062264558}, {"close": -0.0030487828493587043}, {"close": 0.0005087764037504224}, {"close": -0.03309505760177632}, {"close": -0.010570922960010604}, {"close": -0.005861993871235252}, {"close": 0.029491342140276773}, {"close": -0.0041601724066663934}, {"close": -0.042582271403378905}, {"close": 0.003257331870306505}, {"close": -0.006525308634922627}, {"close": 0.007608732359534873}, {"close": -0.0043407555949187574}, {"close": -0.014790738001396384}, {"close": -0.0005520287195113154}, {"close": -0.0279973493872073}, {"close": 0.02744501576366542}, {"close": 0.004960054258250799}, {"close": 0.0010989012094855697}, {"close": 0.021190686979639054}, {"close": 0.0016116038943413912}, {"close": -0.014598799421152636}, {"close": -0.0043668191663404025}, {"close": 0.0}, {"close": -0.014880406838139239}, {"close": -0.017927651016170786}, {"close": 0.019592006462783553}, {"close": 0.033790680784720216}, {"close": 0.06182181171400165}, {"close": -0.019329187749091238}, {"close": -0.012403259783419912}, {"close": 0.0}, {"close": -0.009404458027978407}, {"close": -0.01640682476243394}, {"close": 0.009559286813456172}, {"close": 0.08991413664759103}, {"close": -0.01902032467903011}, {"close": 0.09032935238381205}, {"close": 0.0906783595832758}, {"close": -0.011570377012848335}, {"close": -0.023550289396419496}, {"close": 0.09104578101786732}, {"close": 0.09127577577608728}, {"close": 0.038606776778733136}, {"close": -0.0368352971303511}, {"close": -0.01930009871756283}, {"close": -0.02336725524867727}, {"close": -0.10056964598208447}, {"close": 0.0}, {"close": 0.008946785989806147}, {"close": 0.01686109796606655}, {"close": -0.03195418480456683}, {"close": -0.05578125274815656}, {"close": 0.004769139756902141}, {"close": -0.003032274361519159}, {"close": -0.014420175589706982}, {"close": -0.000880669365593636}, {"close": -0.017329916042915824}, {"close": 0.015566247155419266}, {"close": 0.006159280360534867}, {"close": 0.02597548640326052}, {"close": 0.01610886889898019}, {"close": -0.04868503933359281}, {"close": 0.02743477093419423}, {"close": -0.0407683018036592}, {"close": 0.05187478077255282}, {"close": -0.030187717044321143}, {"close": -0.02303024727469923}, {"close": -0.05384323202082328}, {"close": 0.009880108599707237}, {"close": -0.07130292122611323}, {"close": -0.03218668649590133}, {"close": 0.020046931945290693}, {"close": -0.010230268250814922}, {"close": 0.028385078531186932}, {"close": -0.006015055729761257}, {"close": 0.0020090413588225125}, {"close": -0.017206902268253995}, {"close": 0.0}, {"close": 0.04002535262991455}, {"close": 0.02852501838178732}, {"close": 0.0047551207050102896}, {"close": -0.02449102000829564}, {"close": -0.005361943141385399}, {"close": 0.02127739844728488}, {"close": 0.07952730067468064}, {"close": -0.055885537617640216}, {"close": -0.011751016535518853}, {"close": -0.06798021317256508}, {"close": 0.008566441904981414}, {"close": 0.04512781402010714}, {"close": 0.00954661188357991}, {"close": -0.02063908153957649}, {"close": 0.003389013168637845}, {"close": 0.03374043027035391}, {"close": -0.03470754833412876}, {"close": 0.018692133012152327}, {"close": -0.01675883129833658}, {"close": 0.014857690041312278}, {"close": 0.027218949241314315}, {"close": 0.01971184612413251}, {"close": -0.0027272744177330257}, {"close": -0.008685768891704335}, {"close": -0.007835946986019866}, {"close": -0.00046285582867518655}, {"close": -0.012110068816512042}, {"close": 0.0074696892600099206}, {"close": 0.053871363658133206}, {"close": -0.03270168215042047}, {"close": -0.05764069019364167}, {"close": 0.0024090592233930405}, {"close": 0.0405524683071994}, {"close": 0.04163497265157725}, {"close": -0.004442477319560963}, {"close": 0.02114616239092745}, {"close": -0.012722259772181761}, {"close": 0.04573704814827119}, {"close": -0.026497276710910157}, {"close": 0.04819191146203031}, {"close": 0.032883011403463266}, {"close": -0.007214460149332677}, {"close": -0.10063406105707465}, {"close": -0.06430130135232882}, {"close": -0.021578396590001134}, {"close": 0.00338737318816298}, {"close": -0.017544309650909508}, {"close": -0.011869575555383769}, {"close": -0.0014936522567833646}, {"close": 0.003978125584445202}, {"close": -0.09903920836419136}, {"close": 0.017382295336113976}, {"close": 0.019728712393317735}, {"close": -0.0224248585398989}, {"close": -0.014138354051210831}, {"close": 0.025413641289174754}, {"close": 0.01589016485206093}, {"close": 0.003147956429597971}, {"close": -0.029773597440387805}, {"close": 0.005382144316228501}, {"close": -0.0037644572554425895}, {"close": -0.004860933146905915}, {"close": -0.01143491904432604}, {"close": 0.024345265119175823}, {"close": -0.004284955672501271}, {"close": 0.00535333184250008}, {"close": -0.012896471056963829}, {"close": 0.0}, {"close": 0.00216099489823502}, {"close": -0.0005398110792351367}, {"close": 0.02083965345233279}, {"close": -0.00956436621436893}, {"close": -0.006964935736841517}, {"close": -0.011898463791614695}, {"close": 0.017260406932999992}, {"close": 0.002136752949735242}, {"close": -0.0042780813910783125}, {"close": 0.005877655179219589}, {"close": -0.012329290460708327}, {"close": 0.014458083175229917}, {"close": 0.028820438535491884}, {"close": 0.04938030877198296}, {"close": -0.007897375694951032}, {"close": -0.017496072393758378}, {"close": 0.0905770413584959}, {"close": 0.042828271709659776}, {"close": 0.09104852417660088}, {"close": -0.08928485528910417}, {"close": -0.05059796465736842}, {"close": -0.0032490165503497198}, {"close": -0.026379296911492052}, {"close": 0.014688726545655194}, {"close": 0.044615355062303234}, {"close": -0.010854923409435498}, {"close": 0.012652676702606414}, {"close": -0.04594285205713043}, {"close": 0.00328561666146148}, {"close": 0.03363597439503784}, {"close": 0.09089297444674665}, {"close": 0.008240672921723266}, {"close": 0.004503590007010533}, {"close": -0.02481516911972402}, {"close": 0.02603990901562006}, {"close": -0.01272856437738064}, {"close": -0.05959209720224554}, {"close": 0.0065574005461590396}, {"close": -0.037287941637199215}, {"close": 0.007210486399921297}, {"close": 0.03832224049625429}, {"close": -0.04011999378942529}, {"close": 0.0906783595832758}, {"close": 0.017108360257014406}, {"close": -0.1006150172057319}, {"close": -0.06028970693750201}, {"close": 0.008502649240640519}, {"close": -0.009926812785411434}, {"close": 0.01929017707416201}, {"close": 0.006965433316242115}, {"close": 0.008294978437733852}, {"close": -0.0004590314517140457}, {"close": -0.03077165866675366}, {"close": -0.08856216561782128}, {"close": -0.0067480141865035835}, {"close": -0.023716526617316044}, {"close": 0.0010660981819975116}, {"close": -0.018280078916685583}, {"close": 0.00595078845597709}, {"close": 0.0064516352814888165}, {"close": -0.0200277330164235}, {"close": 0.014654264955280077}, {"close": -0.016295852191232005}, {"close": 0.0032804840791616796}, {"close": 0.004357305368955626}, {"close": 0.022037978697999148}, {"close": 0.0021242705810808112}, {"close": 0.004763173863912391}, {"close": -0.008483613977815366}, {"close": -0.01881270209838505}, {"close": -0.05292240145434244}, {"close": -0.019642457057755663}, {"close": 0.021928172338611572}, {"close": 0.03477635917874512}, {"close": -0.03249585648001999}, {"close": -0.06469039295804672}, {"close": 0.03580334681460922}, {"close": 0.0180080381894807}, {"close": 0.006312789974375906}, {"close": 0.02038575692447396}, {"close": 0.001120448296489728}, {"close": -0.002242153405689723}, {"close": -0.012990863293196446}, {"close": 0.0}, {"close": 0.013551873125582058}, {"close": 0.03472379719965715}, {"close": 0.026725267752169712}, {"close": -0.0321571116345314}, {"close": 0.0010887317351966558}, {"close": 0.045208442673147414}, {"close": -0.04793249774907479}, {"close": 0.008690983547419812}, {"close": 0.013430231411242746}, {"close": 0.021642438816378826}, {"close": 0.06568016686215586}, {"close": -0.013786530522690254}, {"close": -0.0195250257715544}, {"close": 0.024963852528416326}, {"close": -0.02749485868845852}, {"close": 0.015090829643203038}, {"close": -0.044406377135012456}, {"close": -0.05250268379338175}, {"close": -0.09878154455978391}, {"close": -0.07499576045117448}, {"close": 0.03156461723657263}, {"close": 0.04948443046352465}, {"close": 0.022674002387987606}, {"close": 0.03307525168178621}, {"close": -0.010327114155849517}, {"close": 0.03401688527825435}, {"close": 0.018774709395353806}, {"close": 0.0687010710763602}, {"close": -0.0035814824673443173}, {"close": 0.033269197331100474}, {"close": 0.01231846077039906}, {"close": -0.03488146356203029}, {"close": 0.05524086771067676}, {"close": -0.03814643435137674}, {"close": 0.06279223155820458}, {"close": -0.008462673918733654}, {"close": -0.05383117736501361}, {"close": 0.028973300883245703}, {"close": -0.000968523078130537}, {"close": -0.012186356026998198}, {"close": -0.004916430748640556}, {"close": 0.0034440378445986883}, {"close": 0.012689286906492047}, {"close": -0.02753369605502446}, {"close": -0.002995508979798451}, {"close": -0.01005033585350145}, {"close": -0.01989354051957074}, {"close": -0.018196498954862896}, {"close": 0.005232874316658512}, {"close": -0.006808091234656309}, {"close": 0.025422899676888277}, {"close": -0.016529301951210582}, {"close": 0.033293728099463626}, {"close": -0.010126668817929271}, {"close": -0.0051020518838953985}, {"close": -0.009249809012470293}, {"close": -0.0272125635248847}, {"close": -0.010130718474822074}, {"close": 0.007474674416705754}, {"close": 0.035531428378485407}, {"close": 0.012752021820134837}, {"close": 0.015090829643203038}, {"close": 0.03964306720743915}, {"close": -0.006257541477673383}, {"close": 0.011044530034898041}, {"close": -0.017827501777525036}, {"close": -0.01963735169874529}, {"close": -0.011468587432428151}, {"close": 0.009483475118007808}, {"close": -0.022608348027592765}, {"close": -0.037798960095672025}, {"close": 0.004212749779622872}, {"close": -0.0021041564838637328}, {"close": -0.02452148452692599}, {"close": 0.0016176870607860282}, {"close": 0.0064447054426421835}, {"close": 0.025371339742017895}, {"close": -0.016311858648694697}, {"close": 0.01631185864869468}, {"close": -0.003136437490130272}, {"close": 0.001569448399577104}, {"close": -0.0005228758289061852}, {"close": -0.002094241603114848}, {"close": -0.0036755095198025434}, {"close": 0.0036755095198025465}, {"close": -0.046669772280623696}, {"close": 0.016880335478516743}, {"close": 0.044874248200871256}, {"close": 0.020945848775661607}, {"close": -0.013744171559546159}, {"close": -0.0020523352509116306}, {"close": -0.004633212921488143}, {"close": 0.010267030639744195}, {"close": 0.0050942545217430935}, {"close": -0.013814494443188432}, {"close": -0.0005153311116365407}, {"close": 0.001545197320066266}, {"close": 0.026912007493969266}, {"close": 0.02327413794621266}, {"close": 0.0726734775669882}, {"close": -0.006392715834666286}, {"close": -0.04019232564802387}, {"close": 0.0902250915927257}, {"close": 0.014706147389695487}, {"close": -0.023019474638119375}, {"close": -0.024461971351794117}, {"close": 0.06788164346576642}, {"close": -0.0025273812947883517}, {"close": -0.05594348243330021}, {"close": -0.029879995656272026}, {"close": 0.013692591837614431}, {"close": -0.044019151965127144}, {"close": -0.012392913615418699}, {"close": -0.018882187721330095}, {"close": 0.01648122618379185}, {"close": -0.011119283042406562}, {"close": 0.0311104295209713}, {"close": -0.018549877912956505}, {"close": 0.028397554212605133}, {"close": -0.009376533770320918}, {"close": -0.01662351270072687}, {"close": 0.005254370818103639}, {"close": -0.04631585761587752}, {"close": -0.036071982996424515}, {"close": 0.08998161227204741}, {"close": -0.008547060578458408}, {"close": -0.010064786616140596}, {"close": -0.025367213878423216}, {"close": 0.0073837401670991355}, {"close": -0.0193123110323728}, {"close": 0.052592450119170416}, {"close": 0.022051092876595364}, {"close": 0.0032429956613053666}, {"close": 0.006454609776679693}, {"close": -0.010161750259499504}, {"close": -0.012614042516096716}, {"close": 0.03510753160210609}, {"close": 0.017548256829762198}, {"close": -0.05642404536380613}, {"close": 0.06220569366847956}, {"close": 0.0}, {"close": -0.004889985294191792}, {"close": -0.00625840218842248}, {"close": 0.008484087505151111}, {"close": 0.04520543676804699}, {"close": -0.01628142220702814}, {"close": 0.022636029483561877}, {"close": 0.004214081246830893}, {"close": 0.022865265532795297}, {"close": -0.01657725487514925}, {"close": 0.039333214459218724}, {"close": -0.008067813022412421}, {"close": 0.05783322323190973}, {"close": 0.0916197533062805}, {"close": -0.014403902638897082}, {"close": 0.010909838986300357}, {"close": -0.07069440327571605}, {"close": -0.050068215690990146}, {"close": 0.00590669171539018}, {"close": 0.006652343061103772}, {"close": 0.013558216600929521}, {"close": 0.022070911118323412}, {"close": 0.04956051812244961}, {"close": -0.007910864700878947}, {"close": 0.03755311965955322}, {"close": 0.07886516645734483}, {"close": 0.06770669767620709}, {"close": -0.016959825043409163}, {"close": 0.040993024487565526}, {"close": -0.08278270351634673}, {"close": 0.060849399849074996}, {"close": 0.041960094017145975}, {"close": -0.012142386825725313}, {"close": -0.033721029967455775}, {"close": -0.012715884325302674}, {"close": 0.016319491828601186}, {"close": -0.03167134383765141}, {"close": 0.032869666329760024}, {"close": -0.04063488627759118}, {"close": -0.04203101945253664}, {"close": 0.02155463857494817}, {"close": -0.019605320218898617}, {"close": 0.006792845139816348}, {"close": -0.004199650817902426}, {"close": 0.01764846063051542}, {"close": -0.030354283947639917}, {"close": 0.04675843728470809}, {"close": -0.01927085381914422}, {"close": -0.01834913866819654}, {"close": 0.014834196560751885}, {"close": -0.021353124470568946}, {"close": 0.0016337203437677673}, {"close": 0.06661765109830511}, {"close": -0.026932443513743846}, {"close": 0.04808765978725577}, {"close": -0.01780104328588119}, {"close": -0.019674781587512104}, {"close": 0.023624353788345324}, {"close": -0.08872186379174991}, {"close": -0.023467386018566946}, {"close": -0.08417833943548055}, {"close": -0.020503980197707435}, {"close": 0.014211159135559672}, {"close": -0.03053960241527717}, {"close": 0.01482071589270396}, {"close": 0.0377542988535818}, {"close": 0.04127231083875755}, {"close": -0.029715663619980383}, {"close": 0.0021520811749377107}, {"close": 0.013876757100961163}, {"close": -0.00531445006349259}, {"close": -0.006057385348364195}, {"close": 0.002855105436979715}, {"close": 0.004622230451706368}, {"close": -0.015011003807313072}, {"close": -0.031830014710914824}, {"close": 0.01695580614655641}, {"close": -0.0007312614585462313}, {"close": -0.007710704624963168}, {"close": 0.021874732956846332}, {"close": -0.007601846562543752}, {"close": -0.010961015841822975}, {"close": 0.00439883407248358}, {"close": 0.017044836950069996}, {"close": -0.011209663573347784}, {"close": -0.02205971806473222}, {"close": -0.010463473640827748}, {"close": 0.029245097347728802}, {"close": -0.01618277316305586}, {"close": -0.005204472714105794}, {"close": -0.019951725253813776}, {"close": -0.025805398807739223}, {"close": 0.005835457135061645}, {"close": -0.023151907146522502}, {"close": -0.004376374599799}, {"close": -0.016077516727532777}, {"close": 0.008472917342313502}, {"close": -0.015384918839479343}, {"close": 0.026571611607203297}, {"close": 0.05751150560333803}, {"close": -0.01626052087178029}, {"close": -0.003054603367850444}, {"close": -0.008063011622634035}, {"close": 0.004231589311078109}, {"close": -0.01625422782339621}, {"close": -0.0050850882115992405}, {"close": -0.0003922337763564755}, {"close": 0.004306133097492865}, {"close": 0.0031201273362434566}, {"close": -0.024838651290886637}, {"close": 0.00239234563861968}, {"close": -0.01444068415479436}, {"close": -0.005266368258391779}, {"close": -0.01020625311919265}, {"close": 0.053527153640683285}, {"close": -0.03482742175772293}, {"close": -0.004035517986750323}, {"close": 0.025156048035700256}, {"close": -0.02961400881271765}, {"close": -0.014318101017797449}, {"close": -0.023344119661195872}, {"close": -0.005498004968089335}]}}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 计算夏普指数并年化</span>
+<span class="n">s_ratio</span> <span class="o">=</span> <span class="n">log_rt</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">/</span><span class="n">log_rt</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">s_ratio</span><span class="o">*</span><span class="mi">252</span><span class="o">**</span><span class="mf">.5</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>close    0.103558
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id2">
+<h2>上面计算年化的公式<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">年化指数回报=log_return.mean()*252</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">年化波动率=std*252^.5</span></code></p></li>
+<li><p>两个相除得到：<code class="docutils literal notranslate"><span class="pre">anual_ratio</span> <span class="pre">=</span> <span class="pre">day_ratio*252^0.5</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 另外一种方法是计算几何平均收益率</span>
+<span class="n">d2y</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">252</span> <span class="c1"># 计算出年数</span>
+<span class="n">whole_rt</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">test</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># 总回报=最后一天除以第一天</span>
+<span class="n">alg_rt</span> <span class="o">=</span> <span class="n">whole_rt</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">d2y</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="c1">#几何平均</span>
+<span class="c1"># 波动率用pct_change</span>
+<span class="n">alg_std</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">*</span><span class="p">(</span><span class="mi">252</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alg_rt</span> <span class="o">/</span> <span class="n">alg_std</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>close    0.105845
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>总结<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>搞清楚夏普比率的准确意思和算法。</p></li>
+<li><p>使用指数收益率和几何平均收益率，最终结果差别不大。</p></li>
+<li><p>波动率年化的公式还是不太理解，有个解释是：平方根的原因是假设收益是正态随即过程。</p></li>
+<li><p>用收益率的缺点很明显的，和起终点关系太大了。考虑用贝塔值可能会好一点？</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sharpe_logr</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">log_rt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">s</span><span class="o">/</span><span class="n">s</span><span class="o">.</span><span class="n">shift</span><span class="p">())</span>
+    <span class="n">sharpe</span> <span class="o">=</span> <span class="n">log_rt</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">/</span> <span class="n">log_rt</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+    <span class="n">anual_ratio</span> <span class="o">=</span> <span class="n">sharpe</span><span class="o">*</span><span class="mi">252</span><span class="o">**</span><span class="mf">0.5</span>
+
+    <span class="k">return</span> <span class="n">anual_ratio</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sharpe_logr</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.10355841846148638
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="douban.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">豆瓣图书排名分析</p>
+      </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">上面计算年化的公式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">总结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Eric Peng
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

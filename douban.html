@@ -1,0 +1,1378 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>豆瓣图书排名分析 &#8212; 关于投资</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'douban';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="搞清楚夏普指数计算" href="sharpe_test.html" />
+    <link rel="prev" title="Notebooks with MyST Markdown" href="markdown-notebooks.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">豆瓣图书排名分析</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="sharpe_test.html">搞清楚夏普指数计算</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fdouban.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/douban.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>豆瓣图书排名分析</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">豆瓣图书排名分析</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">把前几名的作品显示出来</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">bloxs</span> <span class="kn">import</span> <span class="n">B</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;douban.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;douban.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nn">File ~/2023projects/.venv/lib/python3.10/site-packages/pandas/io/parsers/readers.py:912,</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)</span>
+<span class="g g-Whitespace">    </span><span class="mi">899</span> <span class="n">kwds_defaults</span> <span class="o">=</span> <span class="n">_refine_defaults_read</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">900</span>     <span class="n">dialect</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">901</span>     <span class="n">delimiter</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">908</span>     <span class="n">dtype_backend</span><span class="o">=</span><span class="n">dtype_backend</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">909</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">910</span> <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">912</span> <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+
+<span class="nn">File ~/2023projects/.venv/lib/python3.10/site-packages/pandas/io/parsers/readers.py:577,</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">574</span> <span class="n">_validate_names</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">576</span> <span class="c1"># Create the parser.</span>
+<span class="ne">--&gt; </span><span class="mi">577</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">579</span> <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">580</span>     <span class="k">return</span> <span class="n">parser</span>
+
+<span class="nn">File ~/2023projects/.venv/lib/python3.10/site-packages/pandas/io/parsers/readers.py:1407,</span> in <span class="ni">TextFileReader.__init__</span><span class="nt">(self, f, engine, **kwds)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1404</span>     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1406</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span> <span class="n">IOHandles</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="ne">-&gt; </span><span class="mi">1407</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="nn">File ~/2023projects/.venv/lib/python3.10/site-packages/pandas/io/parsers/readers.py:1661,</span> in <span class="ni">TextFileReader._make_engine</span><span class="nt">(self, f, engine)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1659</span>     <span class="k">if</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1660</span>         <span class="n">mode</span> <span class="o">+=</span> <span class="s2">&quot;b&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1661</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="o">=</span> <span class="n">get_handle</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1662</span>     <span class="n">f</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1663</span>     <span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1664</span>     <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1665</span>     <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;compression&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1666</span>     <span class="n">memory_map</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_map&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1667</span>     <span class="n">is_text</span><span class="o">=</span><span class="n">is_text</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1668</span>     <span class="n">errors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding_errors&quot;</span><span class="p">,</span> <span class="s2">&quot;strict&quot;</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1669</span>     <span class="n">storage_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storage_options&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1670</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1671</span> <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1672</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">handle</span>
+
+<span class="nn">File ~/2023projects/.venv/lib/python3.10/site-packages/pandas/io/common.py:859,</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">854</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">855</span>     <span class="c1"># Check whether the filename is to be opened in binary mode.</span>
+<span class="g g-Whitespace">    </span><span class="mi">856</span>     <span class="c1"># Binary mode does not support &#39;encoding&#39; and &#39;newline&#39;.</span>
+<span class="g g-Whitespace">    </span><span class="mi">857</span>     <span class="k">if</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span> <span class="ow">and</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">858</span>         <span class="c1"># Encoding</span>
+<span class="ne">--&gt; </span><span class="mi">859</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">860</span>             <span class="n">handle</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">861</span>             <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">862</span>             <span class="n">encoding</span><span class="o">=</span><span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">863</span>             <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">864</span>             <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">865</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">866</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">867</span>         <span class="c1"># Binary mode</span>
+<span class="g g-Whitespace">    </span><span class="mi">868</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;douban.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 译者为空表明是中文作品，也可能是不知道的译者，大约差不多</span>
+<span class="n">chinese_book</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">==</span><span class="kc">True</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;中文&quot;</span><span class="p">:</span> <span class="n">chinese_book</span><span class="p">,</span> <span class="s2">&quot;译文&quot;</span><span class="p">:</span> <span class="mi">250</span> <span class="o">-</span> <span class="n">chinese_book</span><span class="p">}</span>
+<span class="n">s_by_lang</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>豆瓣图书排名分析<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">s_by_lang</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">s_by_lang</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">s_by_lang</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/8a88443e8080b6683e0f794f7e0e982a5d1c683c45a23cd12bec36ec2f3a5e77.png" src="_images/8a88443e8080b6683e0f794f7e0e982a5d1c683c45a23cd12bec36ec2f3a5e77.png" />
+<div class="output text_html"><p>some html</p></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;作者&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">by_author</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">by_author</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;作者排名&#39;</span><span class="p">,</span><span class="nb">list</span><span class="p">(</span><span class="n">by_author</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">by_country_string</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;country&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">by_country_string</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">by_country_string</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">by_country_string</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7fb482445111d03774bed037713fad50d7b3b9b17df3a9cfe0cda84dcbd36430.png" src="_images/7fb482445111d03774bed037713fad50d7b3b9b17df3a9cfe0cda84dcbd36430.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">by_author</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">31</span><span class="p">)</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+</style>
+<table id="T_9908e">
+  <thead>
+    <tr>
+      <th id="T_9908e_level0_col0" class="col_heading level0 col0" >作者排名</th>
+      <th id="T_9908e_level0_col1" class="col_heading level0 col1" >作者</th>
+      <th id="T_9908e_level0_col2" class="col_heading level0 col2" >序号</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="T_9908e_row0_col0" class="data row0 col0" >1</td>
+      <td id="T_9908e_row0_col1" class="data row0 col1" >三毛</td>
+      <td id="T_9908e_row0_col2" class="data row0 col2" >7</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row1_col0" class="data row1 col0" >2</td>
+      <td id="T_9908e_row1_col1" class="data row1 col1" >金庸</td>
+      <td id="T_9908e_row1_col2" class="data row1 col2" >6</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row2_col0" class="data row2 col0" >3</td>
+      <td id="T_9908e_row2_col1" class="data row2 col1" >张爱玲</td>
+      <td id="T_9908e_row2_col2" class="data row2 col2" >5</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row3_col0" class="data row3 col0" >4</td>
+      <td id="T_9908e_row3_col1" class="data row3 col1" >鲁迅</td>
+      <td id="T_9908e_row3_col2" class="data row3 col2" >5</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row4_col0" class="data row4 col0" >5</td>
+      <td id="T_9908e_row4_col1" class="data row4 col1" >王小波</td>
+      <td id="T_9908e_row4_col2" class="data row4 col2" >5</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row5_col0" class="data row5 col0" >6</td>
+      <td id="T_9908e_row5_col1" class="data row5 col1" >[奥] 斯蒂芬·茨威格</td>
+      <td id="T_9908e_row5_col2" class="data row5 col2" >4</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row6_col0" class="data row6 col0" >7</td>
+      <td id="T_9908e_row6_col1" class="data row6 col1" >[日] 东野圭吾</td>
+      <td id="T_9908e_row6_col2" class="data row6 col2" >4</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row7_col0" class="data row7 col0" >8</td>
+      <td id="T_9908e_row7_col1" class="data row7 col1" >龙应台</td>
+      <td id="T_9908e_row7_col2" class="data row7 col2" >4</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row8_col0" class="data row8 col0" >9</td>
+      <td id="T_9908e_row8_col1" class="data row8 col1" >林达</td>
+      <td id="T_9908e_row8_col2" class="data row8 col2" >4</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row9_col0" class="data row9 col0" >10</td>
+      <td id="T_9908e_row9_col1" class="data row9 col1" >[意] 埃莱娜·费兰特</td>
+      <td id="T_9908e_row9_col2" class="data row9 col2" >4</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row10_col0" class="data row10 col0" >11</td>
+      <td id="T_9908e_row10_col1" class="data row10 col1" >老舍</td>
+      <td id="T_9908e_row10_col2" class="data row10 col2" >3</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row11_col0" class="data row11 col0" >12</td>
+      <td id="T_9908e_row11_col1" class="data row11 col1" >[意] 伊塔洛·卡尔维诺</td>
+      <td id="T_9908e_row11_col2" class="data row11 col2" >3</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row12_col0" class="data row12 col0" >13</td>
+      <td id="T_9908e_row12_col1" class="data row12 col1" >[哥伦比亚] 加西亚·马尔克斯</td>
+      <td id="T_9908e_row12_col2" class="data row12 col2" >3</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row13_col0" class="data row13 col0" >14</td>
+      <td id="T_9908e_row13_col1" class="data row13 col1" >李娟</td>
+      <td id="T_9908e_row13_col2" class="data row13 col2" >3</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row14_col0" class="data row14 col0" >15</td>
+      <td id="T_9908e_row14_col1" class="data row14 col1" >[英] 阿加莎·克里斯蒂</td>
+      <td id="T_9908e_row14_col2" class="data row14 col2" >3</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row15_col0" class="data row15 col0" >16</td>
+      <td id="T_9908e_row15_col1" class="data row15 col1" >古龙</td>
+      <td id="T_9908e_row15_col2" class="data row15 col2" >3</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row16_col0" class="data row16 col0" >17</td>
+      <td id="T_9908e_row16_col1" class="data row16 col1" >[美] 艾萨克·阿西莫夫</td>
+      <td id="T_9908e_row16_col2" class="data row16 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row17_col0" class="data row17 col0" >18</td>
+      <td id="T_9908e_row17_col1" class="data row17 col1" >刘慈欣</td>
+      <td id="T_9908e_row17_col2" class="data row17 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row18_col0" class="data row18 col0" >19</td>
+      <td id="T_9908e_row18_col1" class="data row18 col1" >八月长安</td>
+      <td id="T_9908e_row18_col2" class="data row18 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row19_col0" class="data row19 col0" >20</td>
+      <td id="T_9908e_row19_col1" class="data row19 col1" >[美] 卡勒德·胡赛尼</td>
+      <td id="T_9908e_row19_col2" class="data row19 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row20_col0" class="data row20 col0" >21</td>
+      <td id="T_9908e_row20_col1" class="data row20 col1" >[日] 村上春树</td>
+      <td id="T_9908e_row20_col2" class="data row20 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row21_col0" class="data row21 col0" >22</td>
+      <td id="T_9908e_row21_col1" class="data row21 col1" >刘瑜</td>
+      <td id="T_9908e_row21_col2" class="data row21 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row22_col0" class="data row22 col0" >23</td>
+      <td id="T_9908e_row22_col1" class="data row22 col1" >白先勇</td>
+      <td id="T_9908e_row22_col2" class="data row22 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row23_col0" class="data row23 col0" >24</td>
+      <td id="T_9908e_row23_col1" class="data row23 col1" >余华</td>
+      <td id="T_9908e_row23_col2" class="data row23 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row24_col0" class="data row24 col0" >25</td>
+      <td id="T_9908e_row24_col1" class="data row24 col1" >[法] 阿尔贝·加缪</td>
+      <td id="T_9908e_row24_col2" class="data row24 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row25_col0" class="data row25 col0" >26</td>
+      <td id="T_9908e_row25_col1" class="data row25 col1" >[美] 彼得·海斯勒</td>
+      <td id="T_9908e_row25_col2" class="data row25 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row26_col0" class="data row26 col0" >27</td>
+      <td id="T_9908e_row26_col1" class="data row26 col1" >严歌苓</td>
+      <td id="T_9908e_row26_col2" class="data row26 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row27_col0" class="data row27 col0" >28</td>
+      <td id="T_9908e_row27_col1" class="data row27 col1" >[英] 乔治·奥威尔</td>
+      <td id="T_9908e_row27_col2" class="data row27 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row28_col0" class="data row28 col0" >29</td>
+      <td id="T_9908e_row28_col1" class="data row28 col1" >[德] 赫尔曼·黑塞</td>
+      <td id="T_9908e_row28_col2" class="data row28 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row29_col0" class="data row29 col0" >30</td>
+      <td id="T_9908e_row29_col1" class="data row29 col1" >[英] 毛姆</td>
+      <td id="T_9908e_row29_col2" class="data row29 col2" >2</td>
+    </tr>
+    <tr>
+      <td id="T_9908e_row30_col0" class="data row30 col0" >31</td>
+      <td id="T_9908e_row30_col1" class="data row30 col1" >[英] 肯·福莱特</td>
+      <td id="T_9908e_row30_col2" class="data row30 col2" >2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%html</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">integrity</span><span class="o">=</span><span class="s">&quot;sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD&quot;</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">&quot;anonymous&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js&quot;</span> <span class="na">integrity</span><span class="o">=</span><span class="s">&quot;sha384-/mhDoLbDldZc3qpsJHpLogda//BVZbgYuw6kof4u2FrCedxOtgRZDTHgHUhOCVim&quot;</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">&quot;anonymous&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><html>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/mhDoLbDldZc3qpsJHpLogda//BVZbgYuw6kof4u2FrCedxOtgRZDTHgHUhOCVim" crossorigin="anonymous"></script>
+</html>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">by_author_sum</span> <span class="o">=</span> <span class="n">by_author</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;序号&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">by_author_sum</span><span class="p">[</span><span class="s1">&#39;card&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">&lt;div class=&quot;card text-center&quot;&gt;</span>
+<span class="s1">  &lt;div class=&quot;h3 card-header bg-primary&quot;&gt;</span>
+<span class="s1">    上榜</span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s1">部</span>
+<span class="s1">  &lt;/div&gt;</span>
+<span class="s1">  &lt;div class=&quot;card-body bg-secondary&quot;&gt;</span>
+<span class="s1">    &lt;p class=&quot;text-center display-4&quot;&gt;</span><span class="si">{</span><span class="n">writer</span><span class="si">}</span><span class="s1">&lt;br&gt;人&lt;/p&gt;</span>
+<span class="s1">  &lt;/div&gt;</span>
+<span class="s1">&lt;/div&gt; </span>
+<span class="s1">&#39;&#39;&#39;</span> <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">writer</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">by_author_sum</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">by_author_sum</span><span class="p">[</span><span class="s1">&#39;作者&#39;</span><span class="p">])]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ss2</span> <span class="o">=</span> <span class="s1">&#39;&lt;div class=&quot;card-group&quot;&gt;&#39;</span><span class="o">+</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">by_author_sum</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]))</span><span class="o">+</span><span class="s1">&#39;&lt;/div&gt;&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="n">ss2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div class="card-group">
+<div class="card text-center">
+  <div class="h3 card-header bg-primary">
+    上榜7部
+  </div>
+  <div class="card-body bg-secondary">
+    <p class="text-center display-4">1<br>人</p>
+  </div>
+</div> 
+
+<div class="card text-center">
+  <div class="h3 card-header bg-primary">
+    上榜6部
+  </div>
+  <div class="card-body bg-secondary">
+    <p class="text-center display-4">1<br>人</p>
+  </div>
+</div> 
+
+<div class="card text-center">
+  <div class="h3 card-header bg-primary">
+    上榜5部
+  </div>
+  <div class="card-body bg-secondary">
+    <p class="text-center display-4">3<br>人</p>
+  </div>
+</div> 
+
+<div class="card text-center">
+  <div class="h3 card-header bg-primary">
+    上榜4部
+  </div>
+  <div class="card-body bg-secondary">
+    <p class="text-center display-4">5<br>人</p>
+  </div>
+</div> 
+
+<div class="card text-center">
+  <div class="h3 card-header bg-primary">
+    上榜3部
+  </div>
+  <div class="card-body bg-secondary">
+    <p class="text-center display-4">6<br>人</p>
+  </div>
+</div> 
+
+<div class="card text-center">
+  <div class="h3 card-header bg-primary">
+    上榜2部
+  </div>
+  <div class="card-body bg-secondary">
+    <p class="text-center display-4">15<br>人</p>
+  </div>
+</div> 
+
+<div class="card text-center">
+  <div class="h3 card-header bg-primary">
+    上榜1部
+  </div>
+  <div class="card-body bg-secondary">
+    <p class="text-center display-4">152<br>人</p>
+  </div>
+</div> 
+</div></div></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>把前几名的作品显示出来<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top10</span> <span class="o">=</span> <span class="n">by_author</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">top10</span><span class="p">[</span><span class="s1">&#39;wcard&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">&lt;div class=&quot;card text-center&quot; &gt;</span>
+<span class="s1">  &lt;div class=&quot;card-body bg-secondary&quot;&gt;</span>
+<span class="s1">    &lt;h1 class=&quot;card-title&quot;&gt;</span><span class="si">{</span><span class="n">author</span><span class="si">}</span><span class="s1">&lt;/h1&gt;</span>
+<span class="s1">    &lt;h3 class=&quot;card-text text-center&quot;&gt;上榜</span><span class="si">{</span><span class="n">bknum</span><span class="si">}</span><span class="s1">部作品&lt;/h3&gt;</span>
+<span class="s1">    &lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot;&gt;作家榜第</span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s1">名&lt;/a&gt;</span>
+<span class="s1">  &lt;/div&gt;</span>
+<span class="s1">&lt;/div&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span> <span class="k">for</span> <span class="n">author</span><span class="p">,</span> <span class="n">bknum</span><span class="p">,</span> <span class="n">rank</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span> <span class="n">top10</span><span class="p">[</span><span class="s1">&#39;作者&#39;</span><span class="p">],</span> <span class="n">top10</span><span class="p">[</span><span class="s1">&#39;序号&#39;</span><span class="p">],</span> <span class="n">top10</span><span class="p">[</span><span class="s1">&#39;作者排名&#39;</span><span class="p">])]</span>
+
+<span class="n">bclist</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">top10</span><span class="p">[</span><span class="s1">&#39;作者&#39;</span><span class="p">]):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&lt;div class=&quot;card-group&quot;&gt;&#39;</span><span class="o">+</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;作者&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;bcard2&#39;</span><span class="p">]))</span><span class="o">+</span><span class="s1">&#39;&lt;/div&gt;&#39;</span>
+    <span class="n">bclist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    
+<span class="n">top10</span><span class="p">[</span><span class="s1">&#39;bcard&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bclist</span>
+
+<span class="n">top10</span><span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">top10</span><span class="p">[</span><span class="s1">&#39;wcard&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">top10</span><span class="p">[</span><span class="s1">&#39;bcard&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="n">top10</span><span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div class="card text-center" >
+  <div class="card-body bg-secondary">
+    <h1 class="card-title">三毛</h1>
+    <h3 class="card-text text-center">上榜7部作品</h3>
+    <a href="#" class="btn btn-primary">作家榜第1名</a>
+  </div>
+</div>
+<div class="card-group">
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">撒哈拉的故事</h3>
+    <h5 class="card-text">豆瓣分9.2</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第13
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">哭泣的骆驼</h3>
+    <h5 class="card-text">豆瓣分8.9</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第59
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">梦里花落知多少</h3>
+    <h5 class="card-text">豆瓣分8.8</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第90
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">万水千山走遍</h3>
+    <h5 class="card-text">豆瓣分8.8</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第124
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">温柔的夜</h3>
+    <h5 class="card-text">豆瓣分9.1</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第156
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">雨季不再来</h3>
+    <h5 class="card-text">豆瓣分8.7</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第165
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">稻草人手记</h3>
+    <h5 class="card-text">豆瓣分8.9</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第222
+  </div>
+</div>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="n">top10</span><span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div class="card text-center" >
+  <div class="card-body bg-secondary">
+    <h1 class="card-title">金庸</h1>
+    <h3 class="card-text text-center">上榜6部作品</h3>
+    <a href="#" class="btn btn-primary">作家榜第2名</a>
+  </div>
+</div>
+<div class="card-group">
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">天龙八部</h3>
+    <h5 class="card-text">豆瓣分9.1</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第14
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">笑傲江湖（全四册）</h3>
+    <h5 class="card-text">豆瓣分9.0</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第27
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">射雕英雄传（全四册）</h3>
+    <h5 class="card-text">豆瓣分9.0</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第42
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">神雕侠侣</h3>
+    <h5 class="card-text">豆瓣分8.9</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第51
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">鹿鼎记（全五册）</h3>
+    <h5 class="card-text">豆瓣分8.8</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第89
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">倚天屠龙记(共四册)</h3>
+    <h5 class="card-text">豆瓣分8.6</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第159
+  </div>
+</div>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="n">top10</span><span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div class="card text-center" >
+  <div class="card-body bg-secondary">
+    <h1 class="card-title">张爱玲</h1>
+    <h3 class="card-text text-center">上榜5部作品</h3>
+    <a href="#" class="btn btn-primary">作家榜第3名</a>
+  </div>
+</div>
+<div class="card-group">
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">倾城之恋</h3>
+    <h5 class="card-text">豆瓣分8.7</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第117
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">半生缘</h3>
+    <h5 class="card-text">豆瓣分8.6</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第138
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">金锁记</h3>
+    <h5 class="card-text">豆瓣分8.6</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第191
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">张爱玲文集</h3>
+    <h5 class="card-text">豆瓣分8.9</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第192
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">红玫瑰与白玫瑰</h3>
+    <h5 class="card-text">豆瓣分8.4</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第246
+  </div>
+</div>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="n">top10</span><span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div class="card text-center" >
+  <div class="card-body bg-secondary">
+    <h1 class="card-title">鲁迅</h1>
+    <h3 class="card-text text-center">上榜5部作品</h3>
+    <a href="#" class="btn btn-primary">作家榜第4名</a>
+  </div>
+</div>
+<div class="card-group">
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">呐喊</h3>
+    <h5 class="card-text">豆瓣分9.0</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第31
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">野草</h3>
+    <h5 class="card-text">豆瓣分9.4</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第56
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">朝花夕拾</h3>
+    <h5 class="card-text">豆瓣分8.9</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第57
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">彷徨</h3>
+    <h5 class="card-text">豆瓣分9.1</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第60
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">故事新编</h3>
+    <h5 class="card-text">豆瓣分9.4</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第91
+  </div>
+</div>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="n">top10</span><span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div class="card text-center" >
+  <div class="card-body bg-secondary">
+    <h1 class="card-title">王小波</h1>
+    <h3 class="card-text text-center">上榜5部作品</h3>
+    <a href="#" class="btn btn-primary">作家榜第5名</a>
+  </div>
+</div>
+<div class="card-group">
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">沉默的大多数:王小波杂文随笔全编</h3>
+    <h5 class="card-text">豆瓣分9.1</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第21
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">黄金时代:时代三部曲</h3>
+    <h5 class="card-text">豆瓣分8.9</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第44
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">爱你就像爱生命</h3>
+    <h5 class="card-text">豆瓣分8.8</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第74
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">绿毛水怪</h3>
+    <h5 class="card-text">豆瓣分9.0</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第148
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">青铜时代:时代三部曲</h3>
+    <h5 class="card-text">豆瓣分8.7</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第178
+  </div>
+</div>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="n">top10</span><span class="p">[</span><span class="s1">&#39;show&#39;</span><span class="p">][</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div class="card text-center" >
+  <div class="card-body bg-secondary">
+    <h1 class="card-title">[奥] 斯蒂芬·茨威格</h1>
+    <h3 class="card-text text-center">上榜4部作品</h3>
+    <a href="#" class="btn btn-primary">作家榜第6名</a>
+  </div>
+</div>
+<div class="card-group">
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">一个陌生女人的来信</h3>
+    <h5 class="card-text">豆瓣分8.7</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第98
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">昨日的世界:一个欧洲人的回忆</h3>
+    <h5 class="card-text">豆瓣分9.2</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第152
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">人类的群星闪耀时</h3>
+    <h5 class="card-text">豆瓣分8.7</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第200
+  </div>
+</div>
+
+<div class="card text-center">
+  <div class="card-body">
+    <h3 class="card-title">象棋的故事</h3>
+    <h5 class="card-text">豆瓣分9.1</h5>
+  </div>
+  <div class="card-footer text-muted">
+    排名第223
+  </div>
+</div>
+</div></div></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="markdown-notebooks.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Notebooks with MyST Markdown</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="sharpe_test.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">搞清楚夏普指数计算</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">豆瓣图书排名分析</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">把前几名的作品显示出来</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Eric Peng
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
